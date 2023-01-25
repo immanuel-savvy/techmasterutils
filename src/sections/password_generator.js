@@ -1,4 +1,14 @@
 import React from "react";
+// import "./libs/bootstrap.min.css";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
+const gen_random_int = (max_int, min_int = 0) =>
+  min_int + Math.floor(Math.random() * max_int);
+
+let _lalpha = "abcdefghijklmnopqrstuvwxyz",
+  _ualpha = _lalpha.toUpperCase(),
+  _digits = "0123456789",
+  _symbols = "'~!@#$%^&*()_+{}|\":?><`[];'/.,";
 
 class Password_generator extends React.Component {
   constructor(props) {
@@ -7,11 +17,50 @@ class Password_generator extends React.Component {
     this.state = {};
   }
 
+  get_checkbox = (id) => {
+    return document.getElementById(id).checked;
+  };
+
+  copy_alert = () => {
+    clearTimeout(this.clear_copy);
+    this.setState({ copied: true });
+
+    this.clear_copy = setTimeout(() => this.setState({ copied: false }), 3000);
+  };
+
+  generate = (e) => {
+    e.preventDefault();
+
+    let ualpha = this.get_checkbox("ualpha"),
+      lalpha = this.get_checkbox("lalpha"),
+      digits = this.get_checkbox("digits"),
+      symbols = this.get_checkbox("symbols");
+
+    if (!ualpha && !lalpha && !digits && !symbols) digits = true;
+    let { length } = this.state;
+
+    let wholeset = "";
+
+    if (lalpha) wholeset += _lalpha;
+    if (ualpha) wholeset += _ualpha;
+    if (digits) wholeset += _digits;
+    if (symbols) wholeset += _symbols;
+
+    let random_value = "";
+
+    for (let i = 0; i < (length || 8); i++)
+      random_value += wholeset[gen_random_int(wholeset.length)];
+
+    this.setState({ password: random_value });
+  };
+
   render() {
+    let { password, copied } = this.state;
+
     return (
-      <section class="section">
-        <div class="top">
-          <div class="text">
+      <section className="section">
+        <div className="top">
+          <div className="text">
             <h1>Password Generator/Decryptor</h1>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
@@ -20,16 +69,23 @@ class Password_generator extends React.Component {
             </p>
           </div>
           <div
-            class="img"
+            className="img"
             style={{
               backgroundImage: `url(${require("../images/password.svg")})`,
             }}
           ></div>
         </div>
-        <div class="content">
-          <form action="" class="pass_form">
-            <div class="flex">
-              <select name="" id="" aria-valuenow="20">
+        <div className="content">
+          <form action="" className="pass_form">
+            <div className="flex">
+              <select
+                name=""
+                id=""
+                onChange={({ target }) => {
+                  this.setState({ length: target.value });
+                }}
+                aria-valuenow="20"
+              >
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -37,7 +93,9 @@ class Password_generator extends React.Component {
                 <option value="5">5</option>
                 <option value="6">6</option>
                 <option value="7">7</option>
-                <option value="8">8</option>
+                <option default selected value="8">
+                  8
+                </option>
                 <option value="9">9</option>
                 <option value="10">10</option>
                 <option value="11">11</option>
@@ -63,49 +121,90 @@ class Password_generator extends React.Component {
               </select>
               <p>Password length (limit 30)</p>
             </div>
-            <div class="flex">
-              <input type="checkbox" name="" id="" />
-              <p>Lowercase letters [abcdefghijkmnpqrstuvwxyz]</p>
+            <div className="flex">
+              <label for="lalpha">
+                <input type="checkbox" name="" id="lalpha" />
+                <p>Lowercase letters [abcdefghijkmnpqrstuvwxyz]</p>
+              </label>
             </div>
-            <div class="flex">
-              <input type="checkbox" name="" id="" />
-              <p>Uppercase letters [ABCDEFGHJKLMNPQRSTUVWXYZ]</p>
+            <div className="flex">
+              <label for="ualpha">
+                <input type="checkbox" name="" id="ualpha" />
+                <p>Uppercase letters [ABCDEFGHJKLMNPQRSTUVWXYZ]</p>
+              </label>
             </div>
-            <div class="flex">
-              <input type="checkbox" name="" id="" />
-              <p>Digits [23456789]</p>
+            <div className="flex">
+              <label for="digits">
+                <input type="checkbox" name="" id="digits" />
+                <p>Digits [23456789]</p>
+              </label>
             </div>
-            <div class="flex">
-              <input type="checkbox" name="" id="" />
-              <p>Symbols [!#$%&()*+-=?[]{}|~@^_]</p>
-            </div>
-            <div class="flex">
-              <input type="checkbox" name="" id="" />
-              <p>Include similar looking characters [0OoIl1]</p>
-            </div>
-            <div class="flex">
-              <input type="checkbox" name="" id="" />
-              <p>Phonetic pronunciation</p>
-            </div>
-            <div class="flex">
-              <input type="checkbox" name="" id="" />
-              <p>MD5 password encryption</p>
-            </div>
-            <div class="flex">
-              <input type="checkbox" name="" id="" />
-              <p>Cisco Type 5 password encryption</p>
+            <div className="flex">
+              <label for="symbols">
+                <input type="checkbox" name="" id="symbols" />
+                <p>Symbols [!#$%&()*+-=?[]{}|~@^_]</p>
+              </label>
             </div>
 
-            <span class="fl">
-              <button type="submit">Generate</button>
-              <a href="" class="cancel">
-                Clear <i class="material-icons-outlined">close</i>
+            <span className="fl">
+              <button onClick={this.generate} type="submit">
+                Generate
+              </button>
+              <a href="#" className="cancel" onClick={this.clear}>
+                Clear <i className="material-icons-outlined">close</i>
               </a>
             </span>
+
+            {password ? (
+              <>
+                <hr />
+                <div
+                  style={{
+                    width: "100%",
+                    textAlign: "center",
+                    marginTop: 10,
+                  }}
+                >
+                  <div style={{ fontWeight: "bold" }}>Your Password:</div>
+
+                  <CopyToClipboard text={password} onCopy={this.copy_alert}>
+                    <div
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        verticalAlign: "center",
+                        textAlign: "center",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <span style={{ fontSize: 22 }}>
+                        &nbsp;&nbsp;{`${password}`} &nbsp;
+                      </span>
+
+                      <span>
+                        <i
+                          style={{ color: "rgb(30, 144, 255, 0.8)" }}
+                          className="material-icons-outlined"
+                        >
+                          copy
+                        </i>
+                      </span>
+                    </div>
+                  </CopyToClipboard>
+
+                  {copied ? (
+                    <div className="alert alert-info" role="alert">
+                      Password copied to clipboard!
+                    </div>
+                  ) : null}
+                </div>
+              </>
+            ) : null}
           </form>
-          <div class="text">
-            <p class="title">About passwords</p>
-            <p class="sub_txt" id="exp_txt">
+
+          <div className="text">
+            <p className="title">About passwords</p>
+            <p className="sub_txt" id="exp_txt">
               Password - a secret series of characters that enables a user to
               access a file, computer, program or something secured with secret
               code. Remember! The easier a password is for the owner to remember
