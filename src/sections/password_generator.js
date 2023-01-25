@@ -9,7 +9,7 @@ class Password_generator extends React.Component {
 
   render() {
     return (
-      <section class="section2" id="section2">
+      <section class="section">
         <div class="top">
           <div class="text">
             <h1>Password Generator/Decryptor</h1>

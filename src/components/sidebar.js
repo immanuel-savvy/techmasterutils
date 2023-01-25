@@ -33,15 +33,15 @@ class Sidebar extends React.Component {
     let { set_active_section, toggle_sidebar } = this.props;
 
     return (
-      <div class="sidebar" id="sidebar">
-        <div class="content">
+      <div className="sidebar" id="sidebar">
+        <div className="content">
           <nav>
-            <span class="logo">
+            <span className="logo">
               <img src={require(`../images/o5.png`)} alt="" />
               <a href="">Techmaster Utils</a>
             </span>
             <i
-              class="material-icons-outlined x"
+              className="material-icons-outlined x"
               id="x"
               onClick={toggle_sidebar}
             >
@@ -51,7 +51,7 @@ class Sidebar extends React.Component {
           {this.sections.map((section) => {
             return (
               <a
-                class="a section_selector"
+                className="a section_selector"
                 key={section}
                 onClick={() => set_active_section(section, true)}
               >

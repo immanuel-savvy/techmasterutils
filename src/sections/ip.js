@@ -9,7 +9,7 @@ class IP extends React.Component {
 
   render() {
     return (
-      <section class="section1" id="section1">
+      <section class="section">
         <div class="top">
           <div class="text">
             <h1>IPv4 Subnet Calculator</h1>

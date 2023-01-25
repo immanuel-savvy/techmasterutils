@@ -9,9 +9,9 @@ class PDF_to_word extends React.Component {
 
   render() {
     return (
-      <section class="section3" id="section3">
-        <div class="top">
-          <div class="text">
+      <section className="section">
+        <div className="top">
+          <div className="text">
             <h1>PDF to Word converter</h1>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
@@ -20,34 +20,34 @@ class PDF_to_word extends React.Component {
             </p>
           </div>
           <div
-            class="img"
+            className="img"
             style={{
               backgroundImage: `url(${require("../images/text_files.svg")})`,
             }}
           ></div>
         </div>
-        <div class="content">
+        <div className="content">
           <form action="">
             <label for="">Upload your PDF</label>
-            <div class="file_div">
-              <div class="txt">
-                <p class="p1">UPLOAD FILES</p>
+            <div className="file_div">
+              <div className="txt">
+                <p className="p1">UPLOAD FILES</p>
                 <h4>or</h4>
-                <p class="p2">Drop Your Files Here</p>
+                <p className="p2">Drop Your Files Here</p>
               </div>
-              <input type="file" class="file" placeholder="CLICK TO ADD" />
+              <input type="file" className="file" placeholder="CLICK TO ADD" />
             </div>
 
-            <span class="fl">
+            <span className="fl">
               <button type="submit">Convert</button>
-              <a href="" class="cancel">
-                Clear <i class="material-icons-outlined">close</i>
+              <a href="" className="cancel">
+                Clear <i className="material-icons-outlined">close</i>
               </a>
             </span>
           </form>
-          <div class="text">
-            <p class="title">About PDF to Word converter</p>
-            <p class="sub_txt" id="exp_txt">
+          <div className="text">
+            <p className="title">About PDF to Word converter</p>
+            <p className="sub_txt" id="exp_txt">
               convert PDF files to Word quickly, easily and entirely online.
               Upload your files to our platform, let our PDF to DOC converter do
               its magic and download your newly created document right away. No

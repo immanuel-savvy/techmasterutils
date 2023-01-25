@@ -8,7 +8,7 @@ class Mac_address extends React.Component {
   }
 
   render() {
-    return <></>;
+    return <section class="section"></section>;
   }
 }
 

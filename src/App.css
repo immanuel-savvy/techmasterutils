@@ -198,21 +198,8 @@ main section {
   flex-direction: column;
   display: none;
 }
-
-main .section1 {
+main .section {
   display: flex;
-}
-
-main .section2 {
-  display: none;
-}
-
-main .section3 {
-  display: none;
-}
-
-main .section4 {
-  display: none;
 }
 
 main section .top {

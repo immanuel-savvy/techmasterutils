@@ -9,7 +9,7 @@ class Port_finder extends React.Component {
 
   render() {
     return (
-      <section class="section4" id="section4">
+      <section class="section">
         <div class="top">
           <div class="text">
             <h1>TCP/UDP Port Finder</h1>
@@ -19,7 +19,10 @@ class Port_finder extends React.Component {
               blanditiis nam.
             </p>
           </div>
-          <div class="img" style="background-image: url(plug.svg)"></div>
+          <div
+            class="img"
+            style={{ backgroundImage: `url(${require("../images/plug.svg")})` }}
+          ></div>
         </div>
         <div class="content">
           <form action="">
