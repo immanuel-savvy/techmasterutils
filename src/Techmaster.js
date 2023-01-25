@@ -1,5 +1,9 @@
 import "./App.css";
 import React from "react";
+import Sidebar from "./components/sidebar";
+import Header from "./components/header";
+import IP from "./sections/ip";
+import Footer from "./components/footer";
 
 class Techmaster extends React.Component {
   constructor(props) {
@@ -9,7 +13,18 @@ class Techmaster extends React.Component {
   }
 
   render() {
-    return <div></div>;
+    return (
+      <div id="body">
+        <Sidebar />
+        <Header />
+
+        <main>
+          <IP />
+        </main>
+
+        <Footer />
+      </div>
+    );
   }
 }
 
