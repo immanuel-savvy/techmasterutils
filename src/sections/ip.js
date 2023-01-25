@@ -68,9 +68,9 @@ class IP extends React.Component {
               254.255.255.254 (reserved for future use, research and development
               purposes).Your IP addressYour are from Switzerland146.70.99.240
             </p>
-            <p class="exp" onclick="exp()">
+            {/* <p class="exp" onclick="exp()">
               Expand <i class="material-icons-outlined">expand_more</i>
-            </p>
+            </p> */}
           </div>
         </div>
       </section>
