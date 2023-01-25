@@ -78,6 +78,12 @@
   padding: 20px 20px;
 }
 
+.x,
+.i,
+.section_selector {
+  cursor: pointer;
+}
+
 .sidebar .content .a {
   width: 100%;
   padding: 30px 20px;

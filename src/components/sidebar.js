@@ -1,13 +1,37 @@
 import React from "react";
+import IP from "../sections/ip";
+import Mac_address from "../sections/mac_address";
+import Password_generator from "../sections/password_generator";
+import PDF_to_word from "../sections/pdf_to_word";
+import Port_finder from "../sections/port_finder";
+
+const sections = new Object({
+  pdf_to_word: { component: <PDF_to_word />, title: "PDF to Word Converter" },
+  password_generator: {
+    component: <Password_generator />,
+    title: "Password Generator",
+  },
+  ip: { component: <IP />, title: "IPV4 / IPV6 Subnet Calculator" },
+  mac_address: { component: <Mac_address />, title: "MAC Address Finder" },
+  port_finder: { component: <Port_finder />, title: "TCP / UDP Port Finder" },
+});
+
+const sections_name = Object.keys(sections);
 
 class Sidebar extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.sections = Object.keys(sections);
+
+    this.state = {
+      active_section: this.sections[0],
+    };
   }
 
   render() {
+    let { set_active_section, toggle_sidebar } = this.props;
+
     return (
       <div class="sidebar" id="sidebar">
         <div class="content">
@@ -16,22 +40,25 @@ class Sidebar extends React.Component {
               <img src={require(`../images/o5.png`)} alt="" />
               <a href="">Techmaster Utils</a>
             </span>
-            <i class="material-icons-outlined x" id="x" onclick="sidebarOff();">
+            <i
+              class="material-icons-outlined x"
+              id="x"
+              onClick={toggle_sidebar}
+            >
               close
             </i>
           </nav>
-          <a class=" a" onclick="section1on(); sidebarOff();">
-            IPv4 subnet calculator
-          </a>
-          <a class="a" onclick="section2on(); sidebarOff();">
-            Password Generator/Decryptor
-          </a>
-          <a class="a" onclick="section3on(); sidebarOff();">
-            PDF to Word Converter
-          </a>
-          <a class="a" onclick="section4on(); sidebarOff();">
-            TCP/UDP Port Finder
-          </a>
+          {this.sections.map((section) => {
+            return (
+              <a
+                class="a section_selector"
+                key={section}
+                onClick={() => set_active_section(section, true)}
+              >
+                {sections[section].title}
+              </a>
+            );
+          })}
         </div>
       </div>
     );
@@ -39,3 +66,4 @@ class Sidebar extends React.Component {
 }
 
 export default Sidebar;
+export { sections, sections_name };
