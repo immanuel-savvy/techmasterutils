@@ -17,9 +17,9 @@ class Password_generator extends React.Component {
     this.state = {};
   }
 
-  get_checkbox = (id) => {
-    return document.getElementById(id).checked;
-  };
+  get_checkbox = (id) => document.getElementById(id).checked;
+
+  clear = () => this.setState({ password: "", copied: false });
 
   copy_alert = () => {
     clearTimeout(this.clear_copy);
