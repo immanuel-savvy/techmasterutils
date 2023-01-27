@@ -38,6 +38,7 @@ class Port_finder extends React.Component {
     }
 
     this.setState({ result });
+    window.scrollTo({ top: 600, behavior: "smooth" });
   };
 
   clear = (e) => {
@@ -125,6 +126,7 @@ class Port_finder extends React.Component {
 
         <div
           className="content"
+          id="result"
           style={{
             overflow: "scroll",
           }}
