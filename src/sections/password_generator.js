@@ -1,5 +1,4 @@
 import React from "react";
-// import "./libs/bootstrap.min.css";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const gen_random_int = (max_int, min_int = 0) =>

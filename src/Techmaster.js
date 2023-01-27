@@ -1,4 +1,5 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import Sidebar, { sections, sections_name } from "./components/sidebar";
 import Header from "./components/header";

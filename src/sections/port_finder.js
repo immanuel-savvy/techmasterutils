@@ -1,17 +1,58 @@
 import React from "react";
+import Table from "react-bootstrap/Table";
 
 class Port_finder extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      result: new Array(),
+    };
   }
 
+  componentDidMount = () => {
+    this.service_et_ports = require("../libs/service_port_.json");
+
+    this.setState({ headers: Object.keys(this.service_et_ports[0]) });
+  };
+
+  search = (e) => {
+    e.preventDefault();
+
+    let { value } = this.state,
+      is_number;
+
+    value = value.trim();
+    if ("0123456789".includes(value[0])) is_number = true;
+
+    let result = new Array();
+
+    for (let s = 0; s < this.service_et_ports.length; s++) {
+      let serice_port = this.service_et_ports[s];
+
+      if (
+        String(serice_port[is_number ? "Port Number" : "Service Name"]) ===
+        value
+      )
+        result.push(serice_port);
+    }
+
+    this.setState({ result });
+  };
+
+  clear = (e) => {
+    e.preventDefault();
+
+    this.setState({ result: new Array() });
+  };
+
   render() {
+    let { value, headers, result } = this.state;
+
     return (
-      <section class="section">
-        <div class="top">
-          <div class="text">
+      <section className="section">
+        <div className="top">
+          <div className="text">
             <h1>TCP/UDP Port Finder</h1>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
@@ -20,14 +61,21 @@ class Port_finder extends React.Component {
             </p>
           </div>
           <div
-            class="img"
+            className="img"
             style={{ backgroundImage: `url(${require("../images/plug.svg")})` }}
           ></div>
         </div>
-        <div class="content">
+        <div className="content">
           <form action="">
             <label for="port number">Port number or name:</label>
-            <input type="text" name="" placeholder="" id="" />
+            <input
+              type="text"
+              name=""
+              value={value}
+              placeholder=""
+              id=""
+              onChange={({ target }) => this.setState({ value: target.value })}
+            />
             <label for="">
               <span>
                 Enter port number (e.g. 21), service (e.g. ssh, ftp) or threat
@@ -38,16 +86,16 @@ class Port_finder extends React.Component {
             <label for="">
               <span>Database updated - March 30, 2016</span>
             </label>
-            <span class="fl">
-              <button type="submit">Search</button>
-              <a href="" class="cancel">
-                Clear <i class="material-icons-outlined">close</i>
+            <span className="fl">
+              <button onClick={this.search}>Search</button>
+              <a href="#" className="cancel" onClick={this.clear}>
+                Clear <i className="material-icons-outlined">close</i>
               </a>
             </span>
           </form>
-          <div class="text">
-            <p class="title">About TCP/UDP ports</p>
-            <p class="sub_txt" id="exp_txt">
+          <div className="text">
+            <p className="title">About TCP/UDP ports</p>
+            <p className="sub_txt" id="exp_txt">
               TCP port uses the Transmission Control Protocol. TCP is one of the
               main protocols in TCP/IP networks. TCP is a connection-oriented
               protocol, it requires handshaking to set up end-to-end
@@ -73,6 +121,39 @@ class Port_finder extends React.Component {
               Switzerland146.70.99.199
             </p>
           </div>
+        </div>
+
+        <div
+          className="content"
+          style={{
+            overflow: "scroll",
+          }}
+        >
+          {result.length ? (
+            <Table striped bordered hover responsive>
+              <thead>
+                <tr>
+                  {headers.map((header) => (
+                    <th key={header}>{header}</th>
+                  ))}
+                </tr>
+              </thead>
+
+              <tbody>
+                {result.map((res, index) => {
+                  return (
+                    <tr key={index}>
+                      {headers.map((header) => (
+                        <td key={header}>{res[header]}</td>
+                      ))}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          ) : (
+            <></>
+          )}
         </div>
       </section>
     );
