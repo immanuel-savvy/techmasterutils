@@ -36,7 +36,10 @@ class Password_generator extends React.Component {
       digits = this.get_checkbox("digits"),
       symbols = this.get_checkbox("symbols");
 
-    if (!ualpha && !lalpha && !digits && !symbols) digits = true;
+    if (!ualpha && !lalpha && !digits && !symbols) {
+      digits = true;
+      lalpha = true;
+    }
     let { length } = this.state;
 
     let wholeset = "";
