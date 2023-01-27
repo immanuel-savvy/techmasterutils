@@ -45,6 +45,8 @@ class Port_finder extends React.Component {
     e.preventDefault();
 
     this.setState({ result: new Array() });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   render() {
