@@ -106,7 +106,6 @@ header {
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  background-color: yellow;
   position: sticky;
   z-index: 1;
   top: 0;

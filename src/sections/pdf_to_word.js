@@ -1,4 +1,5 @@
 import React from "react";
+import { post_request } from "../libs/services";
 
 class PDF_to_word extends React.Component {
   constructor(props) {
@@ -7,16 +8,57 @@ class PDF_to_word extends React.Component {
     this.state = {};
   }
 
+  handle_upload = ({ target }) => {
+    let file = target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    this.setState({ uploading: true });
+
+    reader.onloadend = (e) =>
+      this.setState({
+        pdf: reader.result,
+        file_name: file.name,
+        uploading: false,
+      });
+  };
+
+  download = (e) => {
+    e.preventDefault();
+
+    let { result } = this.state;
+    if (!result) return;
+
+    window.open(result.url);
+  };
+
+  convert = async (e) => {
+    e.preventDefault();
+
+    let { pdf, converting } = this.state;
+    if (converting) return;
+    this.setState({ converting: true });
+
+    let result = await post_request("pdf_to_word", { file: pdf });
+
+    this.setState({ result, converting: false });
+  };
+
+  clear = () => {
+    this.setState({ result: null, file_name: "" });
+  };
+
   render() {
+    let { result, converting, file_name } = this.state;
+
     return (
       <section className="section">
         <div className="top">
           <div className="text">
             <h1>PDF to Word converter</h1>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
-              impedit recusandae. Sed repellat in et debitis dicta quas
-              blanditiis nam.
+              Turn PDFs into editable Doc files with the best PDF to Word
+              converter
             </p>
           </div>
           <div
@@ -33,17 +75,48 @@ class PDF_to_word extends React.Component {
               <div className="txt">
                 <p className="p1">UPLOAD FILES</p>
                 <h4>or</h4>
-                <p className="p2">Drop Your Files Here</p>
+                <p className="p2">Drop Your PDF Files Here</p>
               </div>
-              <input type="file" className="file" placeholder="CLICK TO ADD" />
+              <input
+                onChange={this.handle_upload}
+                type="file"
+                className="file"
+                accept=".pdf"
+                placeholder="CLICK TO ADD"
+              />
             </div>
 
+            {file_name ? (
+              <span style={{ marginBottom: 10 }}>{file_name}</span>
+            ) : null}
+
             <span className="fl">
-              <button type="submit">Convert</button>
-              <a href="" className="cancel">
+              <button onClick={this.convert} type="submit">
+                {converting ? "Converting..." : "Convert"}
+              </button>
+              <a href="#" onClick={this.clear} className="cancel">
                 Clear <i className="material-icons-outlined">close</i>
               </a>
             </span>
+
+            {result ? (
+              <>
+                <span
+                  style={{
+                    marginTop: 20,
+                    textAlign: "center",
+                    alignSelf: "center",
+                  }}
+                >
+                  {result.file_name}
+                </span>
+                <span className="fl" style={{ marginTop: 10 }}>
+                  <button onClick={this.download} type="submit">
+                    Download
+                  </button>
+                </span>
+              </>
+            ) : null}
           </form>
           <div className="text">
             <p className="title">About PDF to Word converter</p>
