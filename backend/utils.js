@@ -1,5 +1,8 @@
 import fs from "fs";
 
+let domain =
+  "http://localhost:3300" || "https://techmasterutils.udaralinksapp.com";
+
 const convert_to_buffer = (base64_file) => {
   return Buffer.from(base64_file.slice(base64_file.indexOf(",")), "base64");
 };
@@ -21,4 +24,4 @@ const remove_file = (file) => {
   } catch (e) {}
 };
 
-export { convert_to_buffer, save_file, remove_file };
+export { convert_to_buffer, save_file, remove_file, domain };

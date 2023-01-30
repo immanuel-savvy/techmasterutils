@@ -1,4 +1,7 @@
-let domain = `http://localhost:3300`;
+let DEV = false;
+let domain = DEV
+  ? `http://localhost:3300`
+  : "https://techmasterutils.udaralinksapp.com";
 
 const post_request = async (url, data) => {
   let ftch = await fetch(`${domain}/${url}`, {

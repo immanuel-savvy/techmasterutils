@@ -1,9 +1,8 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { remove_file, save_file } from "./utils";
+import { domain, remove_file, save_file } from "./utils";
 import { PDFNet } from "@pdftron/pdfnet-node";
-import { domain } from "../src/libs/services";
 
 process.on("uncaughtException", function (error) {
   console.log(error.stack);
@@ -23,7 +22,6 @@ let main = async (input, output) => {
 
 const app = express();
 app.use(cors());
-console.log(__dirname);
 app.use(express.static(__dirname + "/files"));
 app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 app.use(bodyParser.json({ limit: "100mb" }));

@@ -36,10 +36,11 @@ class PDF_to_word extends React.Component {
     e.preventDefault();
 
     let { pdf, converting } = this.state;
-    if (converting) return;
+    if (converting || !pdf) return;
     this.setState({ converting: true });
 
     let result = await post_request("pdf_to_word", { file: pdf });
+    console.log(result);
 
     this.setState({ result, converting: false });
   };
