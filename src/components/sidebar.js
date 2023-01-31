@@ -4,8 +4,13 @@ import Mac_address from "../sections/mac_address";
 import Password_generator from "../sections/password_generator";
 import PDF_to_word from "../sections/pdf_to_word";
 import Port_finder from "../sections/port_finder";
+import Student_loan_calculator from "../sections/student_loan_calculator";
 
 const sections = new Object({
+  student_loan_calculator: {
+    component: <Student_loan_calculator />,
+    title: "Student Loan Calculator",
+  },
   pdf_to_word: { component: <PDF_to_word />, title: "PDF to Word Converter" },
   password_generator: {
     component: <Password_generator />,

@@ -65,9 +65,9 @@ class Password_generator extends React.Component {
           <div className="text">
             <h1>Password Generator/Decryptor</h1>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
-              impedit recusandae. Sed repellat in et debitis dicta quas
-              blanditiis nam.
+              Techmaster Utils password generator creates random passwords based
+              on parameters set by you. Parameters include password length,
+              character combination et cetera.
             </p>
           </div>
           <div

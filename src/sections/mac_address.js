@@ -34,9 +34,8 @@ class Mac_address extends React.Component {
           <div class="text">
             <h1>MAC Address Finder</h1>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
-              impedit recusandae. Sed repellat in et debitis dicta quas
-              blanditiis nam.
+              MAC Address lookup tool finds your computer ethernet card
+              manufacturer or vendor name.
             </p>
           </div>
           <div class="img"></div>

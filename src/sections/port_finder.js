@@ -58,9 +58,9 @@ class Port_finder extends React.Component {
           <div className="text">
             <h1>TCP/UDP Port Finder</h1>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
-              impedit recusandae. Sed repellat in et debitis dicta quas
-              blanditiis nam.
+              Internet free online TCP UDP ports lookup and search. Enter port
+              number or service name and get all info about current udp tcp port
+              or ports.
             </p>
           </div>
           <div
