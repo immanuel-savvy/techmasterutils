@@ -279,7 +279,7 @@ class Student_loan_calculator extends React.Component {
               </a>
             </span>
           </form>
-          <div className="text">
+          <div className="text sm_screen">
             <p className="title">About Student Loan Calculator</p>
             <p className="sub_txt" id="exp_txt">
               A student loan is a type of loan designed to help students pay for
@@ -295,7 +295,7 @@ class Student_loan_calculator extends React.Component {
         </div>
 
         {!result ? null : (
-          <Row style={{ marginTop: 24 }}>
+          <Row style={{ marginTop: 24, overflow: "scroll" }}>
             {result.length ? (
               <Table
                 style={{ width: "100%", textAlign: "center" }}
