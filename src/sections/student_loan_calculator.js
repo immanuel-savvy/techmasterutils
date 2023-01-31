@@ -295,7 +295,15 @@ class Student_loan_calculator extends React.Component {
         </div>
 
         {!result ? null : (
-          <Row style={{ marginTop: 24, overflow: "scroll" }}>
+          <div
+            className="content"
+            id="result"
+            style={{
+              marginTop: 24,
+              justifyContent: "center",
+              overflow: "scroll",
+            }}
+          >
             {result.length ? (
               <Table
                 style={{ width: "100%", textAlign: "center" }}
@@ -339,7 +347,7 @@ class Student_loan_calculator extends React.Component {
             ) : (
               <></>
             )}
-          </Row>
+          </div>
         )}
       </section>
     );
