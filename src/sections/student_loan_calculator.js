@@ -206,7 +206,7 @@ class Student_loan_calculator extends React.Component {
               }}
             >
               <span style={{ marginRight: 5, width: "100%" }}>
-                <label for="port number">Annual % Increment:</label>
+                <label for="port number">Annual pay rise:</label>
                 <input
                   type="number"
                   name=""
