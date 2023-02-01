@@ -10,8 +10,8 @@ class Student_loan_calculator extends React.Component {
     for (let i = 1; i < 15; i++) years.push(this_year - i);
 
     this.state = {
-      loan_amount: "30000",
-      annual_income: "80000",
+      loan_amount: "50000",
+      annual_income: "24000",
       annual_increment: "0",
       loan_interest: "1.25",
       years,
