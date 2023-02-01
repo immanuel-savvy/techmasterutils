@@ -14,11 +14,11 @@ class Header extends React.Component {
     return (
       <header>
         <nav>
-          <span class="logo">
+          <span className="logo">
             <img src={require(`../images/o5.png`)} alt="" />
-            <a href="">Techmaster Utils</a>
+            <a href="#">Techmaster Utils</a>
           </span>
-          <span class="nav2">
+          <span className="nav2">
             {sections_name.map((section) => {
               return (
                 <a
@@ -31,7 +31,11 @@ class Header extends React.Component {
               );
             })}
           </span>
-          <i class="material-icons-outlined i" id="i" onClick={toggle_sidebar}>
+          <i
+            className="material-icons-outlined i"
+            id="i"
+            onClick={toggle_sidebar}
+          >
             menu
           </i>
         </nav>

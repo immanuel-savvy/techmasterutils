@@ -20,6 +20,8 @@ class PDF_to_word extends React.Component {
         pdf: reader.result,
         file_name: file.name,
         uploading: false,
+        converting: false,
+        result: null,
       });
   };
 
@@ -39,7 +41,9 @@ class PDF_to_word extends React.Component {
     if (converting || !pdf) return;
     this.setState({ converting: true });
 
-    let result = await post_request("pdf_to_word", { file: pdf });
+    let result = await post_request("pdf_to_word", {
+      file: pdf,
+    });
 
     this.setState({ result, converting: false });
   };

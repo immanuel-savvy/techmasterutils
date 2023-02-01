@@ -264,7 +264,9 @@ class Student_loan_calculator extends React.Component {
                   aria-valuenow="20"
                 >
                   {years.map((year) => (
-                    <option value={`${year}`}>{year}</option>
+                    <option key={year} value={`${year}`}>
+                      {year}
+                    </option>
                   ))}
                 </select>
               </span>

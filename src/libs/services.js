@@ -4,7 +4,9 @@ let domain = DEV
   : "https://techmasterutils.udaralinksapp.com";
 
 const post_request = async (url, data) => {
-  let ftch = await fetch(`${domain}/${url}`, {
+  if (!url.startsWith("http")) url = `${domain}/${url}`;
+
+  let ftch = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
