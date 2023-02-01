@@ -7,16 +7,11 @@ class Student_loan_calculator extends React.Component {
   constructor(props) {
     super(props);
 
-    let years = new Array(),
-      this_year = new Date().getFullYear();
-    for (let i = 1; i < 15; i++) years.push(this_year - i);
-
     this.state = {
       loan_amount: "50000",
       annual_income: "24000",
       annual_increment: "0",
       loan_interest: "1.25",
-      years,
       loan_type: "1",
     };
   }
@@ -171,7 +166,6 @@ class Student_loan_calculator extends React.Component {
       result,
       annual_increment,
       loan_interest,
-      years,
     } = this.state;
 
     let headers;
@@ -184,6 +178,7 @@ class Student_loan_calculator extends React.Component {
           this.sort_columns.indexOf(h1) - this.sort_columns.indexOf(h2)
       );
     }
+
     return (
       <section className="section">
         <div className="top">
@@ -244,10 +239,13 @@ class Student_loan_calculator extends React.Component {
               </span>
               <span style={{ marginLeft: 5, width: "100%" }}>
                 <label for="port number">
-                  Loan Interest Rate (%):
+                  Loan Interest Rate (%):{" "}
                   <OverlayTrigger placement="right" overlay={this.popover}>
-                    <i onMouseOver={() => {}} className="material-icons-help">
-                      help
+                    <i
+                      onMouseOver={() => {}}
+                      className="material-icons-outlined"
+                    >
+                      info
                     </i>
                   </OverlayTrigger>
                 </label>
@@ -366,17 +364,7 @@ class Student_loan_calculator extends React.Component {
                 <thead>
                   <tr>
                     {headers.map((header) => (
-                      <th key={header}>
-                        {header.replace(/_/g, " ")}{" "}
-                        {header === "int._rate (%)" ? (
-                          <OverlayTrigger
-                            placement="right"
-                            overlay={this.popover}
-                          >
-                            <i className="material-icons-info">info</i>
-                          </OverlayTrigger>
-                        ) : null}
-                      </th>
+                      <th key={header}>{header.replace(/_/g, " ")} </th>
                     ))}
                   </tr>
                 </thead>
