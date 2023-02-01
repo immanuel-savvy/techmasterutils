@@ -1,5 +1,7 @@
 import React from "react";
 import { Row, Table } from "react-bootstrap";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 
 class Student_loan_calculator extends React.Component {
   constructor(props) {
@@ -40,6 +42,7 @@ class Student_loan_calculator extends React.Component {
     1: { threshold: 20195, duration: 24 },
     2: { threshold: 27295, duration: 25 },
     3: { threshold: 25375, duration: 30 },
+    4: { threshold: 21000, duration: 30, interest: 6 },
   };
 
   calculate = (e) => {
@@ -69,7 +72,7 @@ class Student_loan_calculator extends React.Component {
     annual_increment /= 100;
     loan_interest /= 100;
 
-    let repayment_percentage = 9 / 100;
+    let repayment_percentage = (loan_type_.interest || 9) / 100;
 
     let initial_repayment = {
       debt: loan_amount,
@@ -150,6 +153,17 @@ class Student_loan_calculator extends React.Component {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  popover = (
+    <Popover id="popover-basic">
+      <Popover.Header as="h3">Loan Interest</Popover.Header>
+      <Popover.Body>
+        To find the current interest rate you’ve been charged, log-on to your
+        government student loan account where you can view it along with your
+        remaining loan balance.
+      </Popover.Body>
+    </Popover>
+  );
+
   render() {
     let {
       loan_amount,
@@ -229,7 +243,14 @@ class Student_loan_calculator extends React.Component {
                 />
               </span>
               <span style={{ marginLeft: 5, width: "100%" }}>
-                <label for="port number">Loan Interest Rate (%):</label>
+                <label for="port number">
+                  Loan Interest Rate (%):
+                  <OverlayTrigger placement="right" overlay={this.popover}>
+                    <i onMouseOver={() => {}} className="material-icons-help">
+                      help
+                    </i>
+                  </OverlayTrigger>
+                </label>
                 <input
                   type="number"
                   name=""
@@ -279,7 +300,7 @@ class Student_loan_calculator extends React.Component {
               </a>
             </span>
 
-            <p className="mt-4" style={{ textAlign: "justify" }}>
+            <p className="mt-4" style={{ textAlign: "justify", fontSize: 13 }}>
               <span
                 style={{
                   fontStyle: "italic",
@@ -345,7 +366,17 @@ class Student_loan_calculator extends React.Component {
                 <thead>
                   <tr>
                     {headers.map((header) => (
-                      <th key={header}>{header.replace(/_/g, " ")}</th>
+                      <th key={header}>
+                        {header.replace(/_/g, " ")}{" "}
+                        {header === "int._rate (%)" ? (
+                          <OverlayTrigger
+                            placement="right"
+                            overlay={this.popover}
+                          >
+                            <i className="material-icons-info">info</i>
+                          </OverlayTrigger>
+                        ) : null}
+                      </th>
                     ))}
                   </tr>
                 </thead>
