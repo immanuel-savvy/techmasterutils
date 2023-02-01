@@ -272,19 +272,21 @@ class Student_loan_calculator extends React.Component {
               <span style={{ marginRight: 5, width: "100%" }}>
                 <label for="port number">Loan Type:</label>
                 <div className="flex">
-                  <select
-                    onChange={({ target }) => {
-                      this.setState({ loan_type: target.value });
-                    }}
-                    aria-valuenow="20"
-                  >
-                    <option value="1">
-                      Plan 1 (England & Wales Pre 2012+)
-                    </option>
-                    <option value="2">Plan 2 (England & Wales 2012+)</option>
-                    <option value="4">Postgraduate Loan</option>
-                    <option value="3">Plan 4 (Scottish students)</option>
-                  </select>
+                  <div className="select">
+                    <select
+                      onChange={({ target }) => {
+                        this.setState({ loan_type: target.value });
+                      }}
+                      aria-valuenow="20"
+                    >
+                      <option value="1">
+                        Plan 1 (England & Wales Pre 2012+)
+                      </option>
+                      <option value="2">Plan 2 (England & Wales 2012+)</option>
+                      <option value="4">Postgraduate Loan</option>
+                      <option value="3">Plan 4 (Scottish students)</option>
+                    </select>
+                  </div>
                 </div>
               </span>
             </div>
