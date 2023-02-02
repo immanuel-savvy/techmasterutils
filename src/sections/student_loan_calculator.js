@@ -277,6 +277,7 @@ class Student_loan_calculator extends React.Component {
                 <div className="flex">
                   <div className="select">
                     <select
+                      id="selection"
                       onChange={({ target }) => {
                         this.setState({ loan_type: target.value });
                       }}
