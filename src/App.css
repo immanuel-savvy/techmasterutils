@@ -46,6 +46,19 @@
   transition: 300ms;
 }
 
+.box {
+  padding: 50px;
+  border-radius: 15px;
+  margin: 20px;
+  background-color: paleturquoise;
+  border: rgba(255, 255, 255, 0.753) 2px solid;
+  box-shadow: rgba(0, 0, 0, 0.3) 5px 14px 12px;
+  font-size: 24px;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+}
+
 .sidebar {
   position: fixed;
   width: 100%;
@@ -402,7 +415,7 @@ main section .content form .txt {
 
 main section .content form .txt .p1 {
   padding: 10px 20px;
-  background-color: rgb(64, 64, 233);
+  background-color: #4040e9;
   border-radius: 10px;
   color: white;
 }

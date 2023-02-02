@@ -162,6 +162,34 @@ class PDF_to_word extends React.Component {
             </p>
           </div>
         </div>
+        <h3>How it works</h3>
+        <span>In just 3 quick steps</span>
+        <div
+          className="content"
+          style={{
+            marginBottom: 40,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <span className="box">
+            <i className="material-icons-outlined">upload_file</i>
+            <br />
+            <span>Upload</span>
+          </span>
+          <i className="material-icons-outlined">arrow_forward</i>
+          <span className="box">
+            <i class="material-icons-outlined">swap_horiz</i>
+            <br />
+            <span>Convert</span>
+          </span>
+          <i className="material-icons-outlined">arrow_forward</i>
+          <span className="box">
+            <i class="material-icons-outlined">download</i>
+            <br />
+            <span>Download</span>
+          </span>
+        </div>
       </section>
     );
   }
