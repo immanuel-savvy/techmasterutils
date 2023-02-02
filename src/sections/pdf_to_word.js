@@ -94,14 +94,25 @@ class PDF_to_word extends React.Component {
               <span style={{ marginBottom: 10 }}>{file_name}</span>
             ) : null}
 
-            <span className="fl">
-              <button onClick={this.convert} type="submit">
-                {converting ? "Converting..." : "Convert"}
-              </button>
-              <a href="#" onClick={this.clear} className="cancel">
-                Clear <i className="material-icons-outlined">close</i>
-              </a>
-            </span>
+            {converting ? (
+              <span style={{ textAlign: "center", width: "100%" }}>
+                <img
+                  style={{ height: 80, width: 80 }}
+                  src={require("../images/ajax-loader.gif")}
+                />
+                <br />
+                <span>Converting...</span>
+              </span>
+            ) : (
+              <span className="fl">
+                <button onClick={this.convert} type="submit">
+                  Convert
+                </button>
+                <a href="#" onClick={this.clear} className="cancel">
+                  Clear <i className="material-icons-outlined">close</i>
+                </a>
+              </span>
+            )}
 
             {result ? (
               <>

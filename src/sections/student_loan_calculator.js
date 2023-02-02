@@ -1,7 +1,10 @@
 import React from "react";
-import { Row, Table } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
+import Bar_chart from "../components/bar_chart";
+import Line_chart from "../components/line_chart";
+import Pie_chart from "../components/pie_chart";
 
 class Student_loan_calculator extends React.Component {
   constructor(props) {
@@ -399,6 +402,80 @@ class Student_loan_calculator extends React.Component {
             )}
           </div>
         )}
+        {result && result.length ? (
+          <Container style={{ marginTop: 40, marginBottom: 40 }}>
+            <Row style={{ textAlign: "center" }}>
+              <Col md={4} sm={12} lg={3}>
+                <Pie_chart
+                  title="Repayment - Debt (written-off) Chart"
+                  data={{
+                    labels: ["Repayments", "Debts"],
+                    datasets: [
+                      {
+                        label: "Amount",
+                        data: [
+                          result.slice(-1)[0].total_paid,
+                          result.slice(-1)[0].debt,
+                        ],
+                        backgroundColor: [
+                          "rgba(54, 162, 235, 0.2)",
+                          "rgba(255, 99, 132, 0.2)",
+                        ],
+                        borderColor: [
+                          "rgba(54, 162, 235, 1)",
+                          "rgba(255, 99, 132, 1)",
+                        ],
+                        borderWidth: 1,
+                      },
+                    ],
+                  }}
+                />
+              </Col>
+              <Col md={8} sm={12} lg={6}>
+                <Line_chart
+                  title="Annual Repayment / Interest Growth"
+                  data={{
+                    labels: result.map((res) => res.year),
+                    datasets: [
+                      {
+                        label: "Annual Repayment",
+                        data: result.map((res) => res.annual_repayment),
+                        borderColor: "rgb(53, 162, 235)",
+                        backgroundColor: "rgba(53, 162, 235, 0.5)",
+                      },
+                      {
+                        label: "Annual Interest",
+                        data: result.map((res) => res.interest_this_year),
+                        borderColor: "rgb(255, 99, 132)",
+                        backgroundColor: "rgba(255, 99, 132, 0.5)",
+                      },
+                    ],
+                  }}
+                />
+              </Col>
+              <Col>
+                <Bar_chart
+                  title="Salary / Debt growth trend"
+                  data={{
+                    labels: result.map((res) => res.year),
+                    datasets: [
+                      {
+                        label: "Salary",
+                        data: result.map((res) => res.salary),
+                        backgroundColor: "rgba(53, 162, 235, 0.5)",
+                      },
+                      {
+                        label: "Debt",
+                        data: result.map((res) => res.debt),
+                        backgroundColor: "rgba(255, 99, 132, 0.5)",
+                      },
+                    ],
+                  }}
+                />
+              </Col>
+            </Row>
+          </Container>
+        ) : null}
       </section>
     );
   }
