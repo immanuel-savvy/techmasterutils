@@ -500,6 +500,12 @@ main section .content form .flex input {
   height: 15px;
 }
 
+.h1 {
+  font-size: 32px !important;
+  font-weight: 900 !important;
+  overflow: auto;
+}
+
 main section .content .text {
   display: flex;
   flex-direction: column;
@@ -722,7 +728,6 @@ footer .sp2 a {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    word-break: break-all;
   }
 
   main section .content {

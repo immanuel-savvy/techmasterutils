@@ -186,7 +186,7 @@ class Student_loan_calculator extends React.Component {
       <section className="section">
         <div className="top">
           <div className="text">
-            <h1>Student Loan Repayment Calculator</h1>
+            <h1 className="h11">Student Loan Repayment Calculator</h1>
             <p>
               This student loan repayment calculator shows your repayments based
               on your current salary and your student loan's repayment
