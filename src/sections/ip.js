@@ -1,4 +1,5 @@
 import React from "react";
+import { get_request } from "../libs/services";
 
 class IP extends React.Component {
   constructor(props) {
@@ -7,7 +8,15 @@ class IP extends React.Component {
     this.state = {};
   }
 
+  componentDidMount = async () => {
+    let your_ip = await get_request("what_is_my_ip");
+    console.log(your_ip);
+    // this.setState({your_ip})
+  };
+
   render() {
+    let { your_ip } = this.state;
+
     return (
       <section class="section">
         <div class="top">
@@ -35,7 +44,7 @@ class IP extends React.Component {
             </label>
             <input type="text" name="Netmask" placeholder="" id="" />
             <label for="">
-              Your IP Address* <span>146.70.99.199</span>
+              Your IP Address* <span>{your_ip}</span>
             </label>
             <span class="fl">
               <button type="submit">Calculate</button>

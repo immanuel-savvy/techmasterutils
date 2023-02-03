@@ -18,6 +18,16 @@ app.use(bodyParser.json({ limit: "100mb" }));
 
 app.get("/", (req, res) => res.send("<div><h1>Hi, its Techmaster.</h1></div>"));
 
+app.get("/what_is_my_ip", (req, res) => {
+  let ip =
+    (req.headers["x-forwarded-for"] || "").split(",").pop().trim() ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress;
+
+  res.status(200).json({ ok: true, message: "your ip address", data: { ip } });
+});
+
 app.post("/upload_to_remote_server", (req, res) => {
   let { file } = req.body;
   let saved_file = save_file(file, ".pdf");
