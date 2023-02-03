@@ -1,4 +1,5 @@
 import React from "react";
+import Loadindicator from "../components/loadindicator";
 import { post_request } from "../libs/services";
 
 class PDF_to_word extends React.Component {
@@ -95,14 +96,7 @@ class PDF_to_word extends React.Component {
             ) : null}
 
             {converting ? (
-              <span style={{ textAlign: "center", width: "100%" }}>
-                <img
-                  style={{ height: 80, width: 80 }}
-                  src={require("../images/ajax-loader.gif")}
-                />
-                <br />
-                <span>Converting...</span>
-              </span>
+              <Loadindicator />
             ) : (
               <span className="fl">
                 <button onClick={this.convert} type="submit">
