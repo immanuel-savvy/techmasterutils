@@ -7,7 +7,9 @@ class IP extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      masks: Array.from(Array(32).keys()),
+    };
   }
 
   componentDidMount = async () => {
@@ -49,7 +51,8 @@ class IP extends React.Component {
   };
 
   render() {
-    let { your_ip, result, result_header, calculating, ip, mask } = this.state;
+    let { your_ip, result, result_header, calculating, ip, mask, masks } =
+      this.state;
 
     return (
       <section className="section">
@@ -69,23 +72,41 @@ class IP extends React.Component {
             <label for="IP address">IP address</label>
             <input
               type="text"
+              value={ip || (your_ip && your_ip.ip)}
               name="IP address"
               onChange={({ target }) => this.setState({ ip: target.value })}
               placeholder={(your_ip && your_ip.ip) || "(e.g. 192.168.1.1)"}
-              value={ip}
-              id=""
             />
-            <label for="Netmask">
-              Netmask <span>(subnet mask, CIDR or wildcard)</span>
-            </label>
-            <input
-              value={mask}
-              onChange={({ target }) => this.setState({ mask: target.value })}
-              type="text"
-              name="Netmask"
-              placeholder="/32"
-              id=""
-            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <span style={{ marginRight: 5, width: "100%" }}>
+                <label for="port number"> Subnet Mask</label>
+                <div className="flex">
+                  <div className="select">
+                    <select
+                      id="selection"
+                      defaultValue="32"
+                      onChange={({ target }) => {
+                        this.setState({ mask: target.value });
+                      }}
+                      aria-valuenow="20"
+                    >
+                      {masks.map((msk) => (
+                        <option key={msk} value={msk + 1}>
+                          /{msk + 1}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </span>
+            </div>
             <label for="">
               Your IP Address* <span>{(your_ip && your_ip.ip) || "..."}</span>
             </label>
