@@ -319,6 +319,33 @@ class Student_loan_calculator extends React.Component {
           </div>
         </div>
 
+        {result ? (
+          <div
+            className="content"
+            style={{
+              justifyContent: "flex-end",
+            }}
+          >
+            <span
+              onClick={window.print}
+              style={{
+                fontSize: 16,
+                borderColor: "#ccc",
+                borderWidth: 1,
+                borderStyle: "solid",
+                padding: 15,
+                borderRadius: 5,
+                fontWeight: "bold",
+                cursor: "pointer",
+                alignItems: "center",
+                display: "flex",
+              }}
+            >
+              <i className="material-icons-outlined">print</i>
+              <span style={{ marginLeft: 5 }}>Print</span>
+            </span>
+          </div>
+        ) : null}
         {!result ? null : (
           <div
             className="content"
