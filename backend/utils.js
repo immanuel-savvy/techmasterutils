@@ -1,7 +1,6 @@
 import fs from "fs";
 
-let domain =
-  "http://localhost:3300" || "https://techmasterutils.udaralinksapp.com";
+let domain = "http://localhost:3300" || "http://bckend.techmastertools.net";
 
 const convert_to_buffer = (base64_file) => {
   return Buffer.from(base64_file.slice(base64_file.indexOf(",")), "base64");

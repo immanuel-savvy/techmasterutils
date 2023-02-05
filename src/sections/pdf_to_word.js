@@ -130,7 +130,7 @@ class PDF_to_word extends React.Component {
           <div className="text">
             <p className="title">About PDF to Word converter</p>
             <p className="sub_txt" id="exp_txt">
-              convert PDF files to Word quickly, easily and entirely online.
+              Convert PDF files to Word quickly, easily and entirely online.
               Upload your files to our platform, let our PDF to DOC converter do
               its magic and download your newly created document right away. No
               more hassle, convert PDF to editable Word in just a few steps.
