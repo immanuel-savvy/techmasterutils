@@ -324,7 +324,6 @@ main section .content form {
   font-size: inherit;
   cursor: inherit;
   line-height: inherit;
-  z-index: 1;
   outline: none;
 }
 .select {
