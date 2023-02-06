@@ -8,7 +8,41 @@ class IP extends React.Component {
     super(props);
 
     this.state = {
-      masks: Array.from(Array(32).keys()),
+      masks: new Array(
+        "255.255.255.255",
+        "255.255.255.254",
+        "255.255.255.252",
+        "255.255.255.248",
+        "255.255.255.240",
+        "255.255.255.224",
+        "255.255.255.192",
+        "255.255.255.128",
+        "255.255.255.0",
+        "255.255.254.0",
+        "255.255.252.0",
+        "255.255.248.0",
+        "255.255.240.0",
+        "255.255.224.0",
+        "255.255.192.0",
+        "255.255.128.0",
+        "255.255.0.0",
+        "255.254.0.0",
+        "255.252.0.0",
+        "255.248.0.0",
+        "255.240.0.0",
+        "255.224.0.0",
+        "255.192.0.0",
+        "255.128.0.0",
+        "255.0.0.0",
+        "254.0.0.0",
+        "252.0.0.0",
+        "248.0.0.0",
+        "240.0.0.0",
+        "224.0.0.0",
+        "192.0.0.0",
+        "128.0.0.0",
+        "0.0.0.0"
+      ),
     };
   }
 
@@ -51,8 +85,7 @@ class IP extends React.Component {
   };
 
   render() {
-    let { your_ip, result, result_header, calculating, ip, mask, masks } =
-      this.state;
+    let { your_ip, result, result_header, calculating, ip, masks } = this.state;
 
     return (
       <section className="section">
@@ -97,9 +130,9 @@ class IP extends React.Component {
                       }}
                       aria-valuenow="20"
                     >
-                      {masks.map((msk) => (
-                        <option key={msk} value={msk + 1}>
-                          /{msk + 1}
+                      {masks.map((msk, index) => (
+                        <option key={msk} value={32 - index}>
+                          {msk} /{32 - index}
                         </option>
                       ))}
                     </select>
