@@ -72,7 +72,7 @@ class IP extends React.Component {
     result = result && result.address;
     let result_header = result && Object.keys(result);
     this.setState({ result, result_header, calculating: false }, () =>
-      window.scrollTo({ top: 600, behavior: "smooth" })
+      window.scrollTo({ top: 0, behavior: "smooth" })
     );
   };
 
@@ -100,7 +100,40 @@ class IP extends React.Component {
           </div>
           <div className="img"></div>
         </div>
-        <div className="content">
+        {result ? <h3 style={{ marginTop: 50 }}>Subnet Information</h3> : null}
+        {calculating ? (
+          <Loadindicator
+            style={{ marginTop: 50 }}
+            text="fetching subnet details"
+          />
+        ) : result ? (
+          <div
+            className="content"
+            id="result"
+            style={{
+              overflow: "scroll",
+              marginBottom: 50,
+            }}
+          >
+            <Table style={{ width: "100%" }} striped bordered hover responsive>
+              <tbody style={{ width: "100%" }}>
+                {result_header.map((header, index) => {
+                  return header === "binary" ? null : (
+                    <tr key={index}>
+                      <th style={{ width: "45vw" }}>
+                        {header.replace(/_/g, " ")}
+                      </th>
+                      <td style={{ width: "55vw" }}>{result[header]}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </div>
+        ) : (
+          <></>
+        )}
+        <div style={{ marginTop: 25 }} className="content">
           <form action="">
             <label for="IP address">IP address</label>
             <input
@@ -181,40 +214,6 @@ class IP extends React.Component {
             </p> */}
           </div>
         </div>
-
-        {result ? <h3>Subnet Information</h3> : null}
-        {calculating ? (
-          <Loadindicator
-            style={{ marginBottom: 50 }}
-            text="fetching subnet details"
-          />
-        ) : result ? (
-          <div
-            className="content"
-            id="result"
-            style={{
-              overflow: "scroll",
-              marginBottom: 40,
-            }}
-          >
-            <Table style={{ width: "100%" }} striped bordered hover responsive>
-              <tbody style={{ width: "100%" }}>
-                {result_header.map((header, index) => {
-                  return header === "binary" ? null : (
-                    <tr key={index}>
-                      <th style={{ width: "45vw" }}>
-                        {header.replace(/_/g, " ")}
-                      </th>
-                      <td style={{ width: "55vw" }}>{result[header]}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          </div>
-        ) : (
-          <></>
-        )}
       </section>
     );
   }
