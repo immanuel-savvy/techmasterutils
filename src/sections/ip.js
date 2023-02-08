@@ -63,7 +63,7 @@ class IP extends React.Component {
         "128.0.0.0",
         "0.0.0.0"
       ),
-      v6mask: Array.from(Array(128).keys()),
+      v6mask: Array.from(Array(129).keys()),
     };
   }
 
@@ -78,8 +78,14 @@ class IP extends React.Component {
     } else this.setState({ ip, is_v6: false });
   };
 
-  calculate_v6 = () => {
-    let { ip, mask } = this.state;
+  calculate_v6 = (e) => {
+    e && e.preventDefault();
+
+    let { ipv6, v6_mask } = this.state;
+    if (!ipv6) ipv6 = "fa60::8e71:0021:cb6e:e31c";
+    let ip = ipv6;
+
+    let mask = v6_mask || "64";
     mask = parseInt(mask);
 
     let result = new Object({
@@ -120,7 +126,7 @@ class IP extends React.Component {
     let net_upper_bound = new Array(...net);
 
     let x = net_upper_bound.slice(-1)[0];
-    if (x.endsWith("0")) {
+    if (x && x.endsWith("0")) {
       let i = 0;
       while (i < x.length) {
         if (x[i] === "0") {
@@ -146,13 +152,15 @@ class IP extends React.Component {
     let assignable_hosts = binary.slice(mask);
     assignable_hosts = assignable_hosts.split("").map((a) => "1");
 
-    result.assignable_hosts = commalise_figures(
-      parseInt(assignable_hosts.join(""), 2)
-    );
+    result.assignable_hosts = parseInt(assignable_hosts.join(""), 2);
+
+    if (mask > 63)
+      result.assignable_hosts = commalise_figures(result.assignable_hosts);
+
     result.prefix_length = mask;
 
     this.setState(
-      { result, result_header: Object.keys(result) },
+      { result6: result, result_header6: Object.keys(result) },
       this.scroll_to_top
     );
   };
@@ -160,10 +168,9 @@ class IP extends React.Component {
   calculate = async (e) => {
     e && e.preventDefault();
 
-    let { ip, your_ip, is_v6, calculating, mask } = this.state;
-    if (calculating) return;
+    let { ip, your_ip, calculating, mask } = this.state;
 
-    if (is_v6) return this.calculate_v6();
+    if (calculating) return;
 
     if (!ip) ip = your_ip && your_ip.ip;
 
@@ -177,7 +184,7 @@ class IP extends React.Component {
       true
     );
 
-    if (result)
+    if (result && result.address)
       result.address.assignable_hosts = commalise_figures(
         Number(result.address.assignable_hosts)
       );
@@ -192,11 +199,40 @@ class IP extends React.Component {
 
   scroll_to_top = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-  clear = (e) => {
+  clear = (e, v6) => {
     e.preventDefault();
+
     this.setState(
-      { calculating: false, result: null, result_header: null },
+      v6
+        ? { result6: null, result_header6: null }
+        : { calculating: false, result: null, result_header: null },
       this.scroll_to_top
+    );
+  };
+
+  render_result = (result, result_header) => {
+    return (
+      <div
+        className="content"
+        id="result"
+        style={{
+          overflow: "scroll",
+          marginBottom: 50,
+        }}
+      >
+        <Table style={{ width: "100%" }} striped bordered hover responsive>
+          <tbody style={{ width: "100%" }}>
+            {result_header.map((header, index) => {
+              return header === "binary" ? null : (
+                <tr key={index}>
+                  <th style={{ width: "45vw" }}>{header.replace(/_/g, " ")}</th>
+                  <td style={{ width: "55vw" }}>{result[header]}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </div>
     );
   };
 
@@ -205,10 +241,13 @@ class IP extends React.Component {
       your_ip,
       result,
       is_v6,
+      ipv6,
       v6mask,
-      result_header,
       calculating,
       ip,
+      result6,
+      result_header6,
+      result_header,
       masks,
     } = this.state;
 
@@ -225,98 +264,159 @@ class IP extends React.Component {
           </div>
           <div className="img"></div>
         </div>
-        {result ? <h3 style={{ marginTop: 50 }}>Subnet Information</h3> : null}
+        {result ? (
+          <h3 style={{ marginTop: 50 }}>IPv4 Subnet Information</h3>
+        ) : null}
         {calculating ? (
           <Loadindicator
             style={{ marginTop: 50 }}
             text="fetching subnet details"
           />
         ) : result ? (
-          <div
-            className="content"
-            id="result"
-            style={{
-              overflow: "scroll",
-              marginBottom: 50,
-            }}
-          >
-            <Table style={{ width: "100%" }} striped bordered hover responsive>
-              <tbody style={{ width: "100%" }}>
-                {result_header.map((header, index) => {
-                  return header === "binary" ? null : (
-                    <tr key={index}>
-                      <th style={{ width: "45vw" }}>
-                        {header.replace(/_/g, " ")}
-                      </th>
-                      <td style={{ width: "55vw" }}>{result[header]}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          </div>
+          this.render_result(result, result_header)
         ) : (
           <></>
         )}
+
+        {result6 ? (
+          <h3 style={{ marginTop: 50 }}>IPv6 Subnet Information</h3>
+        ) : null}
+        {result6 ? this.render_result(result6, result_header6) : null}
+
         <div style={{ marginTop: 25 }} className="content">
           <form action="">
-            <label for="IP address">IP address</label>
-            <input
-              type="text"
-              value={ip || (your_ip && your_ip.ip)}
-              name="IP address"
-              onChange={({ target }) => this.set_ip(target.value)}
-              placeholder={(your_ip && your_ip.ip) || "(e.g. 192.168.1.1)"}
-            />
             <div
               style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
+                boxShadow: "rgba(0, 0, 0, 0.3) 5px 14px 12px",
+                width: "100%",
+                padding: 14,
+                borderRadius: 20,
               }}
             >
-              <span style={{ marginRight: 5, width: "100%" }}>
-                <label for="port number">
-                  {is_v6 ? "Prefix length" : "Subnet Mask"}
-                </label>
-                <div className="flex">
-                  <div className="select">
-                    <select
-                      id="selection"
-                      defaultValue={is_v6 ? "64" : "32"}
-                      onChange={({ target }) => {
-                        this.setState({ mask: target.value });
-                      }}
-                      aria-valuenow="20"
-                    >
-                      {is_v6
-                        ? v6mask.map((msk) => (
-                            <option key={msk} value={msk}>
-                              /{msk}
-                            </option>
-                          ))
-                        : masks.map((msk, index) => (
-                            <option key={msk} value={32 - index}>
-                              {msk} /{32 - index}
-                            </option>
-                          ))}
-                    </select>
+              <h4
+                style={{
+                  width: "100%",
+                  textAlign: "center",
+                }}
+              >
+                IPv4
+              </h4>
+              <label for="IP address">IP address</label>
+              <input
+                type="text"
+                value={ip || (your_ip && your_ip.ip)}
+                name="IP address"
+                onChange={({ target }) => this.set_ip(target.value)}
+                placeholder={(your_ip && your_ip.ip) || "(e.g. 192.168.1.1)"}
+              />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <span style={{ marginRight: 5, width: "100%" }}>
+                  <label for="port number">
+                    {is_v6 ? "Prefix length" : "Subnet Mask"}
+                  </label>
+                  <div className="flex">
+                    <div className="select">
+                      <select
+                        id="selection"
+                        defaultValue={"32"}
+                        onChange={({ target }) => {
+                          this.setState({ mask: target.value });
+                        }}
+                        aria-valuenow="20"
+                      >
+                        {masks.map((msk, index) => (
+                          <option key={msk} value={32 - index}>
+                            {msk} /{32 - index}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
-                </div>
+                </span>
+              </div>
+
+              <label for="">
+                Your IP Address* <span>{(your_ip && your_ip.ip) || "..."}</span>
+              </label>
+              <span className="fl">
+                <button onClick={this.calculate}>
+                  {calculating ? "Calculating..." : "Calculate"}
+                </button>
+                <a href="#" className="cancel" onClick={this.clear}>
+                  Clear <i className="material-icons-outlined">close</i>
+                </a>
               </span>
             </div>
-            <label for="">
-              Your IP Address* <span>{(your_ip && your_ip.ip) || "..."}</span>
-            </label>
-            <span className="fl">
-              <button onClick={this.calculate}>
-                {calculating ? "Calculating..." : "Calculate"}
-              </button>
-              <a href="#" className="cancel" onClick={this.clear}>
-                Clear <i className="material-icons-outlined">close</i>
-              </a>
-            </span>
+            <hr />
+
+            <div
+              style={{
+                boxShadow: "rgba(0, 0, 0, 0.3) 5px 14px 12px",
+                width: "100%",
+                padding: 14,
+                borderRadius: 20,
+              }}
+            >
+              <h4 style={{ textAlign: "center", width: "100%" }}>IPv6</h4>
+              <label for="IP address">IP address</label>
+              <input
+                type="text"
+                value={ipv6}
+                name="IPv6 address"
+                onChange={({ target }) => this.set_ip(target.value)}
+                placeholder={"fa60::8e71:0021:cb6e:e31c"}
+              />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <span style={{ marginRight: 5, width: "100%" }}>
+                  <label for="port number">
+                    {is_v6 ? "Prefix length" : "Subnet Mask"}
+                  </label>
+                  <div className="flex">
+                    <div className="select">
+                      <select
+                        id="selection"
+                        defaultValue={"64"}
+                        onChange={({ target }) => {
+                          this.setState({ v6_mask: target.value });
+                        }}
+                        aria-valuenow="20"
+                      >
+                        {v6mask.map((msk) => (
+                          <option key={msk} value={msk.toString()}>
+                            /{msk}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </span>
+              </div>
+
+              <span className="fl">
+                <button onClick={this.calculate_v6}>Calculate</button>
+                <a
+                  href="#"
+                  className="cancel"
+                  onClick={(e) => this.clear(e, 6)}
+                >
+                  Clear <i className="material-icons-outlined">close</i>
+                </a>
+              </span>
+            </div>
           </form>
           <div className="text">
             <p className="title">About IPv4 Subnet Calculator</p>

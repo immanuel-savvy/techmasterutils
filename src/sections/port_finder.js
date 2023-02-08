@@ -68,7 +68,7 @@ class Port_finder extends React.Component {
             style={{ backgroundImage: `url(${require("../images/plug.svg")})` }}
           ></div>
         </div>
-        <div className="content">
+        <div className="content" style={{ marginTop: 40 }}>
           <form action="">
             <label for="port number">Port number or name:</label>
             <input

@@ -14,6 +14,11 @@ class Techmaster extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    let active_section = window.sessionStorage.getItem("active_section");
+    active_section && this.setState({ active_section });
+  };
+
   toggle_sidebar = () => {
     let is_on = document.getElementById("sidebar").style.display === "flex";
 
@@ -23,7 +28,11 @@ class Techmaster extends React.Component {
   };
 
   set_active_section = (active_section, sidebar) =>
-    this.setState({ active_section }, sidebar && this.toggle_sidebar);
+    this.setState({ active_section }, () => {
+      sidebar && this.toggle_sidebar();
+
+      window.sessionStorage.setItem("active_section", active_section);
+    });
 
   render() {
     let { active_section } = this.state;

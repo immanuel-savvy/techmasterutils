@@ -73,7 +73,7 @@ class PDF_to_word extends React.Component {
             }}
           ></div>
         </div>
-        <div className="content">
+        <div className="content" style={{ marginTop: 40 }}>
           <form action="">
             <label for="">Upload your PDF</label>
             <div className="file_div">

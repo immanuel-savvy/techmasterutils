@@ -199,7 +199,7 @@ class Student_loan_calculator extends React.Component {
             style={{ backgroundImage: `url(${require("../images/plug.svg")})` }}
           ></div>
         </div>
-        <div className="content">
+        <div className="content" style={{ marginTop: 40 }}>
           <form action="">
             <label for="port number">Loan Amount:</label>
             <input

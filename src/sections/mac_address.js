@@ -40,7 +40,7 @@ class Mac_address extends React.Component {
           </div>
           <div class="img"></div>
         </div>
-        <div class="content">
+        <div className="content" style={{ marginTop: 40 }}>
           <form action="">
             <label for="MAC-Address">MAC Address</label>
             <input

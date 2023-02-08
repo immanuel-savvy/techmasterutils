@@ -77,7 +77,7 @@ class Password_generator extends React.Component {
             }}
           ></div>
         </div>
-        <div className="content">
+        <div className="content" style={{ marginTop: 40 }}>
           <form action="" className="pass_form">
             <div className="flex">
               <select
