@@ -5,6 +5,7 @@ import Popover from "react-bootstrap/Popover";
 import Bar_chart from "../components/bar_chart";
 import Line_chart from "../components/line_chart";
 import Pie_chart from "../components/pie_chart";
+import { commalise_figures } from "./ip";
 
 class Student_loan_calculator extends React.Component {
   constructor(props) {
@@ -389,7 +390,11 @@ class Student_loan_calculator extends React.Component {
                             ? loan_interest
                             : header === "#"
                             ? index + 1
-                            : `${res[header]}`}
+                            : `${commalise_figures(
+                                header === "year"
+                                  ? String(res[header])
+                                  : res[header]
+                              )}`}
                         </td>
                       ))}
                     </tr>

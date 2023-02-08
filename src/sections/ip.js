@@ -3,6 +3,26 @@ import { Table } from "react-bootstrap";
 import Loadindicator from "../components/loadindicator";
 import { get_request } from "../libs/services";
 
+const commalise_figures = (figure) => {
+  if (typeof figure !== "number") return figure;
+
+  figure = figure.toString();
+  if (figure.length <= 3) return figure;
+
+  let ff = "",
+    i;
+  for (i = 0; i < figure.length; i += 3)
+    ff = `${figure.slice(figure.length - i - 3, figure.length - i)},${ff}`;
+
+  if (i < figure.length) ff = `${figure.slice(0, i)}${ff}`;
+  else if (i > figure.length) {
+    ff = `${figure.slice(0, figure.length % 3)}${ff}`;
+  }
+  if (ff.startsWith(",")) ff = ff.slice(1);
+
+  return ff.slice(0, -1);
+};
+
 class IP extends React.Component {
   constructor(props) {
     super(props);
@@ -43,6 +63,7 @@ class IP extends React.Component {
         "128.0.0.0",
         "0.0.0.0"
       ),
+      v6mask: Array.from(Array(128).keys()),
     };
   }
 
@@ -51,11 +72,98 @@ class IP extends React.Component {
     this.setState({ your_ip }, this.calculate);
   };
 
+  set_ip = (ip) => {
+    if (ip.includes(":")) {
+      this.setState({ ip, is_v6: true });
+    } else this.setState({ ip, is_v6: false });
+  };
+
+  calculate_v6 = () => {
+    let { ip, mask } = this.state;
+    mask = parseInt(mask);
+
+    let result = new Object({
+      ip,
+    });
+    ip = ip.split(":");
+
+    if (ip.length < 8) {
+      if (ip.includes("")) {
+        let zeros = new Array(8 - ip.length);
+        zeros = zeros.map((z) => "0000");
+        ip.splice(ip.indexOf(""), 0, ...zeros);
+        ip = ip.map((p) => p || "");
+      }
+    }
+
+    ip = ip.map((p) => p.padStart(4, "0"));
+    result.full_address = ip.join(":");
+    let binary = ip.map((p) => {
+      return parseInt(p, 16).toString(2).padStart(16, "0");
+    });
+    result.binary = binary.join(":");
+    binary = binary.join("");
+
+    let net = new Array();
+    let network_address = binary.slice(0, mask);
+
+    while (true) {
+      if (network_address.length >= 16) {
+        net.push(network_address.slice(0, 16));
+        network_address = network_address.slice(16);
+      } else {
+        network_address.length && net.push(network_address);
+        break;
+      }
+    }
+    net = ip.slice(0, net.length);
+    let net_upper_bound = new Array(...net);
+
+    let x = net_upper_bound.slice(-1)[0];
+    if (x.endsWith("0")) {
+      let i = 0;
+      while (i < x.length) {
+        if (x[i] === "0") {
+          x = x.slice(0, i);
+          break;
+        }
+        i++;
+      }
+      x = x.padEnd(4, "f");
+      net_upper_bound.pop();
+      net_upper_bound.push(x);
+    }
+    while (net.length < 8) {
+      net.push("0000");
+      net_upper_bound.push("ffff");
+    }
+
+    result.network_address = net.join(":");
+    result.address_range = `${result.network_address} - ${net_upper_bound.join(
+      ":"
+    )}`;
+
+    let assignable_hosts = binary.slice(mask);
+    assignable_hosts = assignable_hosts.split("").map((a) => "1");
+
+    result.assignable_hosts = commalise_figures(
+      parseInt(assignable_hosts.join(""), 2)
+    );
+    result.prefix_length = mask;
+
+    this.setState(
+      { result, result_header: Object.keys(result) },
+      this.scroll_to_top
+    );
+  };
+
   calculate = async (e) => {
     e && e.preventDefault();
 
-    let { ip, your_ip, calculating, mask } = this.state;
+    let { ip, your_ip, is_v6, calculating, mask } = this.state;
     if (calculating) return;
+
+    if (is_v6) return this.calculate_v6();
 
     if (!ip) ip = your_ip && your_ip.ip;
 
@@ -69,23 +177,40 @@ class IP extends React.Component {
       true
     );
 
+    if (result)
+      result.address.assignable_hosts = commalise_figures(
+        Number(result.address.assignable_hosts)
+      );
+
     result = result && result.address;
     let result_header = result && Object.keys(result);
-    this.setState({ result, result_header, calculating: false }, () =>
-      window.scrollTo({ top: 0, behavior: "smooth" })
+    this.setState(
+      { result, result_header, calculating: false },
+      this.scroll_to_top
     );
   };
+
+  scroll_to_top = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   clear = (e) => {
     e.preventDefault();
     this.setState(
       { calculating: false, result: null, result_header: null },
-      () => window.scrollTo({ top: 0, behavior: "smooth" })
+      this.scroll_to_top
     );
   };
 
   render() {
-    let { your_ip, result, result_header, calculating, ip, masks } = this.state;
+    let {
+      your_ip,
+      result,
+      is_v6,
+      v6mask,
+      result_header,
+      calculating,
+      ip,
+      masks,
+    } = this.state;
 
     return (
       <section className="section">
@@ -140,7 +265,7 @@ class IP extends React.Component {
               type="text"
               value={ip || (your_ip && your_ip.ip)}
               name="IP address"
-              onChange={({ target }) => this.setState({ ip: target.value })}
+              onChange={({ target }) => this.set_ip(target.value)}
               placeholder={(your_ip && your_ip.ip) || "(e.g. 192.168.1.1)"}
             />
             <div
@@ -152,22 +277,30 @@ class IP extends React.Component {
               }}
             >
               <span style={{ marginRight: 5, width: "100%" }}>
-                <label for="port number"> Subnet Mask</label>
+                <label for="port number">
+                  {is_v6 ? "Prefix length" : "Subnet Mask"}
+                </label>
                 <div className="flex">
                   <div className="select">
                     <select
                       id="selection"
-                      defaultValue="32"
+                      defaultValue={is_v6 ? "64" : "32"}
                       onChange={({ target }) => {
                         this.setState({ mask: target.value });
                       }}
                       aria-valuenow="20"
                     >
-                      {masks.map((msk, index) => (
-                        <option key={msk} value={32 - index}>
-                          {msk} /{32 - index}
-                        </option>
-                      ))}
+                      {is_v6
+                        ? v6mask.map((msk) => (
+                            <option key={msk} value={msk}>
+                              /{msk}
+                            </option>
+                          ))
+                        : masks.map((msk, index) => (
+                            <option key={msk} value={32 - index}>
+                              {msk} /{32 - index}
+                            </option>
+                          ))}
                     </select>
                   </div>
                 </div>
@@ -209,9 +342,6 @@ class IP extends React.Component {
               research and development purposes).Your IP addressYour are from
               Switzerland146.70.99.240
             </p>
-            {/* <p className="exp" onclick="exp()">
-              Expand <i className="material-icons-outlined">expand_more</i>
-            </p> */}
           </div>
         </div>
       </section>
@@ -220,3 +350,4 @@ class IP extends React.Component {
 }
 
 export default IP;
+export { commalise_figures };
