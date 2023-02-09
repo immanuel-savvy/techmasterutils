@@ -35,6 +35,14 @@ class PDF_to_word extends React.Component {
     window.open(result.url);
   };
 
+  treat_filename = (filename) => {
+    filename = filename.split(".");
+    filename = filename.slice(0, -1);
+    // filename.push("docx");
+
+    return filename.join(".");
+  };
+
   convert = async (e) => {
     e.preventDefault();
 
@@ -121,9 +129,14 @@ class PDF_to_word extends React.Component {
                   {result.file_name}
                 </span>
                 <span className="fl" style={{ marginTop: 10 }}>
-                  <button onClick={this.download} type="submit">
+                  <a
+                    href={result && result.url}
+                    download={this.treat_filename(file_name)}
+                    // onClick={this.download}
+                    // type="submit"
+                  >
                     Download
-                  </button>
+                  </a>
                 </span>
               </>
             ) : null}
