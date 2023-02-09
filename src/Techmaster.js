@@ -15,8 +15,17 @@ class Techmaster extends React.Component {
   }
 
   componentDidMount = () => {
-    let active_section = window.sessionStorage.getItem("active_section");
-    active_section && this.setState({ active_section });
+    let href = window.location.href.toLowerCase().split("/");
+    if (sections_name.includes(href.slice(-1)[0])) {
+      href = href.slice(-1)[0];
+      this.setState({ active_section: href }, () =>
+        window.sessionStorage.setItem("active_section", href)
+      );
+    } else {
+      let active_section = window.sessionStorage.getItem("active_section");
+      if (active_section) window.location.href = active_section;
+      // active_section && this.setState({ active_section });
+    }
   };
 
   toggle_sidebar = () => {
@@ -30,7 +39,7 @@ class Techmaster extends React.Component {
   set_active_section = (active_section, sidebar) =>
     this.setState({ active_section }, () => {
       sidebar && this.toggle_sidebar();
-
+      window.location.href = active_section;
       window.sessionStorage.setItem("active_section", active_section);
     });
 

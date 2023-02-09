@@ -311,10 +311,10 @@ class IP extends React.Component {
               <label for="IP address">IP address</label>
               <input
                 type="text"
-                value={ip || (your_ip && your_ip.ip)}
+                value={ip}
                 name="IP address"
                 onChange={({ target }) => this.set_ip(target.value)}
-                placeholder={(your_ip && your_ip.ip) || "(e.g. 192.168.1.1)"}
+                placeholder="(e.g. 192.168.1.1)"
               />
               <div
                 style={{
