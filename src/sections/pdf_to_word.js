@@ -1,6 +1,6 @@
 import React from "react";
 import Loadindicator from "../components/loadindicator";
-import { post_request } from "../libs/services";
+import { client_domain, post_request } from "../libs/services";
 
 class PDF_to_word extends React.Component {
   constructor(props) {
@@ -66,12 +66,13 @@ class PDF_to_word extends React.Component {
               converter
             </p>
           </div>
-          <div
-            className="img"
-            style={{
-              backgroundImage: `url(${require("../images/text_files.svg")})`,
-            }}
-          ></div>
+          <div>
+            <img
+              src={`${client_domain}/images/text_files.svg`}
+              style={{ width: "100%" }}
+              className="img"
+            />
+          </div>
         </div>
         <div className="content" style={{ marginTop: 40 }}>
           <form action="">

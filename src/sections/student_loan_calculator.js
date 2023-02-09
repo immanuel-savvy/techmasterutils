@@ -5,6 +5,7 @@ import Popover from "react-bootstrap/Popover";
 import Bar_chart from "../components/bar_chart";
 import Line_chart from "../components/line_chart";
 import Pie_chart from "../components/pie_chart";
+import { client_domain } from "../libs/services";
 import { commalise_figures } from "./ip";
 
 class Student_loan_calculator extends React.Component {
@@ -194,10 +195,13 @@ class Student_loan_calculator extends React.Component {
               threshold.
             </p>
           </div>
-          <div
-            className="img"
-            style={{ backgroundImage: `url(${require("../images/plug.svg")})` }}
-          ></div>
+          <div>
+            <img
+              src={`${client_domain}/images/calculator.svg`}
+              style={{ width: "100%" }}
+              className="img"
+            />
+          </div>
         </div>
         <div className="content" style={{ marginTop: 40 }}>
           <form action="">

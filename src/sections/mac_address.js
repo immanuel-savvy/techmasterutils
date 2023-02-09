@@ -1,4 +1,5 @@
 import React from "react";
+import { client_domain } from "../libs/services";
 
 class Mac_address extends React.Component {
   constructor(props) {
@@ -38,7 +39,13 @@ class Mac_address extends React.Component {
               manufacturer or vendor name.
             </p>
           </div>
-          <div class="img"></div>
+          <div>
+            <img
+              src={`${client_domain}/images/port.webp`}
+              style={{ width: "100%" }}
+              className="img"
+            />
+          </div>
         </div>
         <div className="content" style={{ marginTop: 40 }}>
           <form action="">

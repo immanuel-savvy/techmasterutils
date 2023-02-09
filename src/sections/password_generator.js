@@ -1,5 +1,6 @@
 import React from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { client_domain } from "../libs/services";
 
 const gen_random_int = (max_int, min_int = 0) =>
   min_int + Math.floor(Math.random() * max_int);
@@ -70,12 +71,13 @@ class Password_generator extends React.Component {
               character combination et cetera.
             </p>
           </div>
-          <div
-            className="img"
-            style={{
-              backgroundImage: `url(${require("../images/password.svg")})`,
-            }}
-          ></div>
+          <div>
+            <img
+              src={`${client_domain}/images/password.svg`}
+              style={{ width: "100%" }}
+              className="img"
+            />
+          </div>
         </div>
         <div className="content" style={{ marginTop: 40 }}>
           <form action="" className="pass_form">

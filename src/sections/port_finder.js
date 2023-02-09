@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
+import { client_domain } from "../libs/services";
 
 class Port_finder extends React.Component {
   constructor(props) {
@@ -63,10 +64,13 @@ class Port_finder extends React.Component {
               or ports.
             </p>
           </div>
-          <div
-            className="img"
-            style={{ backgroundImage: `url(${require("../images/plug.svg")})` }}
-          ></div>
+          <div>
+            <img
+              src={`${client_domain}/images/port.webp`}
+              style={{ width: "100%" }}
+              className="img"
+            />
+          </div>
         </div>
         <div className="content" style={{ marginTop: 40 }}>
           <form action="">

@@ -1,10 +1,11 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 import Loadindicator from "../components/loadindicator";
-import { get_request } from "../libs/services";
+import { client_domain, get_request } from "../libs/services";
 
 const commalise_figures = (figure) => {
   if (typeof figure !== "number") return figure;
+  if (figure >= 1e21) return figure.toLocaleString("fullwide");
 
   figure = figure.toString();
   if (figure.length <= 3) return figure;
@@ -69,14 +70,10 @@ class IP extends React.Component {
 
   componentDidMount = async () => {
     let your_ip = await get_request("what_is_my_ip");
-    this.setState({ your_ip }, this.calculate);
+    this.setState({ your_ip });
   };
 
-  set_ip = (ip) => {
-    if (ip.includes(":")) {
-      this.setState({ ip, is_v6: true });
-    } else this.setState({ ip, is_v6: false });
-  };
+  set_ip = (ip) => this.setState(ip.includes(":") ? { ipv6: ip } : { ip });
 
   calculate_v6 = (e) => {
     e && e.preventDefault();
@@ -152,10 +149,9 @@ class IP extends React.Component {
     let assignable_hosts = binary.slice(mask);
     assignable_hosts = assignable_hosts.split("").map((a) => "1");
 
-    result.assignable_hosts = parseInt(assignable_hosts.join(""), 2);
-
-    if (mask > 63)
-      result.assignable_hosts = commalise_figures(result.assignable_hosts);
+    result.assignable_hosts = commalise_figures(
+      parseInt(assignable_hosts.join(""), 2)
+    );
 
     result.prefix_length = mask;
 
@@ -225,7 +221,12 @@ class IP extends React.Component {
             {result_header.map((header, index) => {
               return header === "binary" ? null : (
                 <tr key={index}>
-                  <th style={{ width: "45vw" }}>{header.replace(/_/g, " ")}</th>
+                  <th style={{ width: "45vw" }}>
+                    {(header === "ip" ? header.toUpperCase() : header).replace(
+                      /_/g,
+                      " "
+                    )}
+                  </th>
                   <td style={{ width: "55vw" }}>{result[header]}</td>
                 </tr>
               );
@@ -262,7 +263,13 @@ class IP extends React.Component {
               more.
             </p>
           </div>
-          <div className="img"></div>
+          <div>
+            <img
+              src={`${client_domain}/images/plug.svg`}
+              style={{ width: "100%" }}
+              className="img"
+            />
+          </div>
         </div>
         {result ? (
           <h3 style={{ marginTop: 50 }}>IPv4 Subnet Information</h3>
@@ -318,9 +325,7 @@ class IP extends React.Component {
                 }}
               >
                 <span style={{ marginRight: 5, width: "100%" }}>
-                  <label for="port number">
-                    {is_v6 ? "Prefix length" : "Subnet Mask"}
-                  </label>
+                  <label for="port number">Subnet Mask</label>
                   <div className="flex">
                     <div className="select">
                       <select
@@ -382,9 +387,7 @@ class IP extends React.Component {
                 }}
               >
                 <span style={{ marginRight: 5, width: "100%" }}>
-                  <label for="port number">
-                    {is_v6 ? "Prefix length" : "Subnet Mask"}
-                  </label>
+                  <label for="port number">Prefix length</label>
                   <div className="flex">
                     <div className="select">
                       <select

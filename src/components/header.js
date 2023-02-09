@@ -15,7 +15,7 @@ class Header extends React.Component {
       <header>
         <nav>
           <span className="logo">
-            <img src={require(`../images/o5.png`)} alt="" />
+            {/* <img src={require(`../images/o5.png`)} alt="" /> */}
             <a href="#">Techmaster Tools</a>
           </span>
           <span className="nav2">
