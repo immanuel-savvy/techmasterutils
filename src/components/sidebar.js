@@ -42,7 +42,6 @@ class Sidebar extends React.Component {
         <div className="content">
           <nav>
             <span className="logo">
-              <img src={require(`../images/o5.png`)} alt="" />
               <a href="">Techmaster Tools</a>
             </span>
             <i
