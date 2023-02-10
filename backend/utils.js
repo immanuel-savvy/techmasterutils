@@ -6,10 +6,15 @@ const convert_to_buffer = (base64_file) => {
   return Buffer.from(base64_file.slice(base64_file.indexOf(",")), "base64");
 };
 
-const save_file = (buffer, ext) => {
-  let filename = `${Math.random().toString().slice(2)}${ext}`;
+const save_file = (buffer, ext, filename) => {
+  filename = filename
+    ? `${filename}-${Math.random().toString().slice(-3)}${ext}`
+    : `${Math.random().toString().slice(2)}${ext}`;
 
-  fs.writeFileSync(`${__dirname}/files/${filename}`, convert_to_buffer(buffer));
+  fs.writeFileSync(
+    `${__dirname}/files/${filename}`,
+    typeof buffer === "string" ? convert_to_buffer(buffer) : buffer
+  );
 
   return filename;
 };

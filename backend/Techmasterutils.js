@@ -41,7 +41,7 @@ app.post("/upload_to_remote_server", (req, res) => {
 });
 
 app.post("/pdf_to_word", async (req, res) => {
-  let { file, url } = req.body;
+  let { file, filename: filename_, url } = req.body;
 
   let saved_file;
   if (!url) {
@@ -79,7 +79,22 @@ app.post("/pdf_to_word", async (req, res) => {
       clearInterval(task_interval);
       let url = data.data.file;
       try {
-        res.json({ ok: true, message: "converted", data: { url } });
+        axios
+          .get(url, {
+            responseType: "arraybuffer",
+          })
+          .then((result) => {
+            let filename = save_file(
+              Buffer.from(result.data),
+              ".docx",
+              filename_
+            );
+            url = `${domain}/${filename}`;
+            console.log(url);
+            res.json({ ok: true, message: "converted", data: { url } });
+
+            setTimeout(() => remove_file(filename), 60 * 1000 * 60);
+          });
       } catch (e) {}
 
       saved_file && remove_file(saved_file);
