@@ -1,4 +1,4 @@
-let DEV = false;
+let DEV = true;
 let domain = DEV
   ? `http://localhost:3300`
   : "http://bckend.techmastertools.net";

@@ -1,12 +1,14 @@
 import React from "react";
 import IP from "../sections/ip";
 import Mac_address from "../sections/mac_address";
+// import News from "../sections/news";
 import Password_generator from "../sections/password_generator";
 import PDF_to_word from "../sections/pdf_to_word";
 import Port_finder from "../sections/port_finder";
 import Student_loan_calculator from "../sections/student_loan_calculator";
 
 const sections = new Object({
+  // news: { component: <News />, title: "Home" },
   student_loan_calculator: {
     component: <Student_loan_calculator />,
     title: "Student Loan Repayment",
