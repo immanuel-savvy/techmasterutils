@@ -48,7 +48,6 @@ let main = async (input, output) => {
     await PDFNet.addResourceSearchPath("./");
 
     if (!(await PDFNet.StructuredOutputModule.isModuleAvailable())) {
-      console.log("hello");
       return;
     }
 
