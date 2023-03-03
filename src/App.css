@@ -716,6 +716,10 @@ footer .sp2 a {
     padding-bottom: 15%;
   }
 
+  #student_loan_interest_rate_label {
+    font-size: 14px;
+  }
+
   main section .top .text h1 {
     font-size: 36px;
     margin-bottom: 15px;
@@ -750,6 +754,10 @@ footer .sp2 a {
 @media screen and (max-width: 500px) {
   .sm_screen {
     margin-top: 200px !important;
+  }
+
+  #student_loan_interest_rate_label {
+    font-size: 10px;
   }
 
   main section .content form {

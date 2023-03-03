@@ -246,7 +246,7 @@ class Student_loan_calculator extends React.Component {
                 />
               </span>
               <span style={{ marginLeft: 5, width: "100%" }}>
-                <label for="port number">
+                <label for="port number" id="student_loan_interest_rate_label">
                   Loan Interest Rate (%):{" "}
                   <OverlayTrigger placement="right" overlay={this.popover}>
                     <i
