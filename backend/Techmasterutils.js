@@ -8,7 +8,6 @@ import {
   SaveAsOnlineRequest,
 } from "asposewordscloud";
 import { createReadStream, writeFileSync } from "fs";
-import "./test";
 
 process.on("uncaughtException", function (error) {
   console.log(error.stack);
