@@ -207,22 +207,22 @@ class Student_loan_calculator extends React.Component {
           <form action="">
             <label for="port number">Loan Amount:</label>
             <input
-              type="number"
               name=""
-              value={loan_amount}
+              value={loan_amount ? commalise_figures(Number(loan_amount)) : ""}
               placeholder=""
               onChange={({ target }) =>
-                this.setState({ loan_amount: target.value })
+                this.setState({ loan_amount: target.value.replace(/,/g, "") })
               }
             />
             <label for="port number">Annual Income:</label>
             <input
-              type="number"
               name=""
-              value={annual_income}
+              value={
+                annual_income ? commalise_figures(Number(annual_income)) : ""
+              }
               placeholder=""
               onChange={({ target }) =>
-                this.setState({ annual_income: target.value })
+                this.setState({ annual_income: target.value.replace(/,/g, "") })
               }
             />
             <div

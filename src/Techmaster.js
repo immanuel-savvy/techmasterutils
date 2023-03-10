@@ -5,7 +5,7 @@ import Sidebar, { sections, sections_name } from "./components/sidebar";
 import Header from "./components/header";
 import Footer from "./components/footer";
 
-class Techmaster extends React.Component {
+class Calculators extends React.Component {
   constructor(props) {
     super(props);
 
@@ -24,7 +24,6 @@ class Techmaster extends React.Component {
     } else {
       let active_section = window.sessionStorage.getItem("active_section");
       if (active_section) window.location.href = active_section;
-      // active_section && this.setState({ active_section });
     }
   };
 
@@ -65,4 +64,4 @@ class Techmaster extends React.Component {
   }
 }
 
-export default Techmaster;
+export default Calculators;

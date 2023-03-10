@@ -8,6 +8,13 @@ import {
   SaveAsOnlineRequest,
 } from "asposewordscloud";
 import { createReadStream, writeFileSync } from "fs";
+import GoogleNewRss from "google-news-rss";
+import { shuffle } from "underscore";
+import routes from "./news/routes";
+import ds_conn from "./news/conn";
+import { create_default_admin } from "./news/handlers/starter";
+
+let google_news = new GoogleNewRss();
 
 process.on("uncaughtException", function (error) {
   console.log(error.stack);
@@ -25,6 +32,26 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 app.use(bodyParser.json({ limit: "100mb" }));
 
 app.get("/", (req, res) => res.send("<div><h1>Hi, its Techmaster.</h1></div>"));
+
+routes(app);
+
+app.get("/google_rss_feed", (req, res) => {
+  google_news
+    .search("nigeria uk", 5)
+    .then((feed) => {
+      feed = shuffle(feed);
+
+      res.json({
+        ok: true,
+        message: "google rss feed",
+        data: feed.slice(0, 5),
+      });
+    })
+    .catch((e) => {
+      console.log(e);
+      res.end();
+    });
+});
 
 app.get("/what_is_my_ip", (req, res) => {
   let ip =
@@ -87,5 +114,8 @@ app.post("/pdf_to_word", async (req, res) => {
 });
 
 app.listen(3300, () => {
+  ds_conn();
+  create_default_admin();
+
   console.log("Techmaster Utils Backend started on :3300");
 });
