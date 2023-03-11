@@ -1,5 +1,7 @@
 import { admin_login, get_admins } from "./handlers/admin";
 import {
+  add_article_category,
+  articles,
   article_categories,
   article_viewed,
   comments,
@@ -23,6 +25,7 @@ const routes = (app) => {
 
   app.post("/admin_login", admin_login);
 
+  app.post("/articles", articles);
   app.post("/new_article", new_article);
   app.post("/update_article", update_article);
   app.post("/update_article_category", update_article_category);
@@ -33,6 +36,7 @@ const routes = (app) => {
   app.post("/new_reply", new_reply);
   app.post("/new_comment", new_comment);
   app.post("/get_replies", get_replies);
+  app.post("/add_article_category", add_article_category);
 };
 
 export default routes;

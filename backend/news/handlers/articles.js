@@ -1,3 +1,4 @@
+import { remove_image, save_image } from "../../utils";
 import {
   ARTICLES,
   ARTICLE_CATEGORIES,
@@ -5,13 +6,24 @@ import {
   GLOBALS,
   REPLIES,
   TRENDING_ARTICLES,
-} from "../ds/conn";
-import { remove_image, save_image } from "./courses";
+} from "../conn";
 
 const articles = (req, res) => {
   let { limit, skip, total_articles } = req.body;
 
-  let articles_ = ARTICLES.read(null, { limit: Number(limit), skip });
+  let articles_ = ARTICLES.read(null, {
+    limit: Number(limit),
+    skip: Number(skip),
+  });
+
+  console.log(
+    {
+      limit: Number(limit),
+      skip: Number(skip),
+    },
+    articles_
+  );
+
   if (total_articles)
     articles_ = {
       articles: articles_,
@@ -38,7 +50,6 @@ const new_article = (req, res) => {
 
   article.image = save_image(article.image);
   article.views = 0;
-  article.categories = article.categories.map((cat) => cat._id);
   let result = ARTICLES.write(article);
   article._id = result._id;
   article.created = result.created;
@@ -48,9 +59,11 @@ const new_article = (req, res) => {
       article: article._id,
     })._id;
 
-  ARTICLE_CATEGORIES.update_several(article.categories, {
-    articles: { $push: article._id },
-  });
+  article.categories &&
+    article.categories.length &&
+    ARTICLE_CATEGORIES.update_several(article.categories, {
+      articles: { $push: article._id },
+    });
 
   res.json({ ok: true, message: "article created", data: article });
 };
@@ -146,6 +159,7 @@ const remove_article_category = (req, res) => {
 
 const comments = (req, res) => {
   let { article, skip } = req.params;
+  console.log(article);
   let comments_ = COMMENTS.read({ article });
 
   res.json({ ok: true, message: "article comments", data: comments_ });

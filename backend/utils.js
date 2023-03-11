@@ -1,6 +1,9 @@
 import fs from "fs";
+import { generate_random_string } from "generalised-datastore/utils/functions";
 
 let domain = "http://localhost:3300" || "https://bckend.techmastertools.net";
+
+let prefix = "techmasternews";
 
 const convert_to_buffer = (base64_file) => {
   return Buffer.from(base64_file.slice(base64_file.indexOf(",")), "base64");
@@ -13,7 +16,7 @@ const save_image = (base64_image, image_name) => {
   image_name = `${prefix}_${image_name || Date.now()}${
     image_name ? "" : generate_random_string(6, "alpha")
   }.jpg`;
-  let image_path = __dirname + `files/images/${image_name}`;
+  let image_path = __dirname + `/files/images/${image_name}`;
   fs.writeFileSync(
     image_path,
     Buffer.from(base64_image.slice(base64_image.indexOf(",")), "base64")

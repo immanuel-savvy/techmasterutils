@@ -20,7 +20,7 @@ const ds_conn = () => {
   USERS_HASH = gds.folder("users_hash", "user");
   ADMINSTRATORS = gds.folder("adminstrators");
   ADMIN_HASH = gds.folder("admin_hash", "admin");
-  ARTICLES = gds.folder("articles");
+  ARTICLES = gds.folder("articles", null, "categories");
   COMMENTS = gds.folder("comments", "article");
   REPLIES = gds.folder("replies", "comment");
   GLOBALS = gds.folder("globals", "global");
