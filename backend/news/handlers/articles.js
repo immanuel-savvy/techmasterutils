@@ -8,20 +8,38 @@ import {
   TRENDING_ARTICLES,
 } from "../conn";
 
+const clean_article_categories = (articles) => {
+  let cats = new Set();
+  articles.map((article) =>
+    article.categories.map((c) => c && typeof c === "string" && cats.add(c))
+  );
+
+  cats = ARTICLE_CATEGORIES.read(Array.from(cats));
+
+  articles = articles.map((article) => {
+    article.categories = article.categories
+      .map((cat) => {
+        if (cat && typeof cat === "string")
+          cat = cats.find((c) => c._id === cat);
+
+        return cat;
+      })
+      .filter((c) => c);
+
+    return article;
+  });
+
+  return articles;
+};
+
 const articles = (req, res) => {
   let { limit, skip, total_articles } = req.body;
 
-  let articles_ = ARTICLES.read(null, {
-    limit: Number(limit),
-    skip: Number(skip),
-  });
-
-  console.log(
-    {
+  let articles_ = clean_article_categories(
+    ARTICLES.read(null, {
       limit: Number(limit),
       skip: Number(skip),
-    },
-    articles_
+    })
   );
 
   if (total_articles)
@@ -36,11 +54,13 @@ const articles = (req, res) => {
 const search_articles = (req, res) => {
   let { search_param, limit, exclude } = req.body;
 
-  let articles = ARTICLES.read(null, {
-    limit: Number(limit),
-    search_param,
-    exclude,
-  });
+  let articles = clean_article_categories(
+    ARTICLES.read(null, {
+      limit: Number(limit),
+      search_param,
+      exclude,
+    })
+  );
 
   res.json({ ok: true, message: "article search results", data: articles });
 };
@@ -251,7 +271,16 @@ const article = (req, res) =>
     data: ARTICLES.readone(req.params.article),
   });
 
+const get_articles = (req, res) => {
+  let { articles } = req.body;
+
+  articles = clean_article_categories(ARTICLES.read(articles));
+
+  res.json({ ok: true, message: "articles", data: articles });
+};
+
 export {
+  get_articles,
   article,
   articles,
   new_article,

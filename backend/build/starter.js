@@ -3,10 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.create_default_admin = void 0;
+exports.default_admin = exports.create_default_admin = void 0;
 var _conn = require("../conn");
 var default_admin = "adminstrators~techmastertools~1234567890123",
   default_user = "users~techmastertools~1234567890123";
+exports.default_admin = default_admin;
 var create_default_admin = function create_default_admin() {
   if (!_conn.ADMINSTRATORS.readone(default_admin)) {
     _conn.ADMINSTRATORS.write({

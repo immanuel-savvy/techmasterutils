@@ -5,17 +5,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.save_image = exports.save_file = exports.remove_image = exports.remove_file = exports.domain = exports.convert_to_buffer = void 0;
 var _fs = _interopRequireDefault(require("fs"));
+var _functions = require("generalised-datastore/utils/functions");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var domain = "http://localhost:3300" || "https://bckend.techmastertools.net";
 exports.domain = domain;
+var prefix = "techmasternews";
 var convert_to_buffer = function convert_to_buffer(base64_file) {
   return Buffer.from(base64_file.slice(base64_file.indexOf(",")), "base64");
 };
 exports.convert_to_buffer = convert_to_buffer;
 var save_image = function save_image(base64_image, image_name) {
   if (!base64_image || base64_image && !base64_image.startsWith("data")) return base64_image;
-  image_name = "".concat(prefix, "_").concat(image_name || Date.now()).concat(image_name ? "" : generate_random_string(6, "alpha"), ".jpg");
-  var image_path = __dirname + "files/images/".concat(image_name);
+  image_name = "".concat(prefix, "_").concat(image_name || Date.now()).concat(image_name ? "" : (0, _functions.generate_random_string)(6, "alpha"), ".jpg");
+  var image_path = __dirname + "/files/images/".concat(image_name);
   _fs.default.writeFileSync(image_path, Buffer.from(base64_image.slice(base64_image.indexOf(",")), "base64"));
   return image_name;
 };

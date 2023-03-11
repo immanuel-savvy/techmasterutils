@@ -3,18 +3,39 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.update_article_category = exports.update_article = exports.trending_articles = exports.search_articles = exports.remove_trending_article = exports.remove_article_category = exports.remove_article = exports.new_reply = exports.new_comment = exports.new_article = exports.get_replies = exports.comments = exports.articles = exports.article_viewed = exports.article_categories = exports.article = exports.add_article_category = exports.GLOBAL_trending_articles = void 0;
-var _conn = require("../ds/conn");
-var _courses = require("./courses");
+exports.update_article_category = exports.update_article = exports.trending_articles = exports.search_articles = exports.remove_trending_article = exports.remove_article_category = exports.remove_article = exports.new_reply = exports.new_comment = exports.new_article = exports.get_replies = exports.get_articles = exports.comments = exports.articles = exports.article_viewed = exports.article_categories = exports.article = exports.add_article_category = exports.GLOBAL_trending_articles = void 0;
+var _utils = require("../../utils");
+var _conn = require("../conn");
+var clean_article_categories = function clean_article_categories(articles) {
+  var cats = new Set();
+  articles.map(function (article) {
+    return article.categories.map(function (c) {
+      return c && typeof c === "string" && cats.add(c);
+    });
+  });
+  cats = _conn.ARTICLE_CATEGORIES.read(Array.from(cats));
+  articles = articles.map(function (article) {
+    article.categories = article.categories.map(function (cat) {
+      if (cat && typeof cat === "string") cat = cats.find(function (c) {
+        return c._id === cat;
+      });
+      return cat;
+    }).filter(function (c) {
+      return c;
+    });
+    return article;
+  });
+  return articles;
+};
 var articles = function articles(req, res) {
   var _req$body = req.body,
     limit = _req$body.limit,
     skip = _req$body.skip,
     total_articles = _req$body.total_articles;
-  var articles_ = _conn.ARTICLES.read(null, {
+  var articles_ = clean_article_categories(_conn.ARTICLES.read(null, {
     limit: Number(limit),
-    skip: skip
-  });
+    skip: Number(skip)
+  }));
   if (total_articles) articles_ = {
     articles: articles_,
     total_articles: _conn.ARTICLES.config.total_entries
@@ -31,11 +52,11 @@ var search_articles = function search_articles(req, res) {
     search_param = _req$body2.search_param,
     limit = _req$body2.limit,
     exclude = _req$body2.exclude;
-  var articles = _conn.ARTICLES.read(null, {
+  var articles = clean_article_categories(_conn.ARTICLES.read(null, {
     limit: Number(limit),
     search_param: search_param,
     exclude: exclude
-  });
+  }));
   res.json({
     ok: true,
     message: "article search results",
@@ -45,18 +66,15 @@ var search_articles = function search_articles(req, res) {
 exports.search_articles = search_articles;
 var new_article = function new_article(req, res) {
   var article = req.body;
-  article.image = (0, _courses.save_image)(article.image);
+  article.image = (0, _utils.save_image)(article.image);
   article.views = 0;
-  article.categories = article.categories.map(function (cat) {
-    return cat._id;
-  });
   var result = _conn.ARTICLES.write(article);
   article._id = result._id;
   article.created = result.created;
   if (article.trending) article.trending = _conn.TRENDING_ARTICLES.write({
     article: article._id
   })._id;
-  _conn.ARTICLE_CATEGORIES.update_several(article.categories, {
+  article.categories && article.categories.length && _conn.ARTICLE_CATEGORIES.update_several(article.categories, {
     articles: {
       $push: article._id
     }
@@ -99,7 +117,7 @@ var update_article = function update_article(req, res) {
     sections = article.sections,
     categories = article.categories,
     _id = article._id;
-  image = (0, _courses.save_image)(image);
+  image = (0, _utils.save_image)(image);
   categories = categories && categories.map(function (cat) {
     return cat._id;
   });
@@ -119,7 +137,7 @@ exports.update_article = update_article;
 var remove_article = function remove_article(req, res) {
   var article = req.params.article;
   var result = _conn.ARTICLES.remove(article);
-  (0, _courses.remove_image)(result.image);
+  (0, _utils.remove_image)(result.image);
   _conn.ARTICLE_CATEGORIES.update_several(result.categories, {
     articles: {
       $splice: article
@@ -184,6 +202,7 @@ var comments = function comments(req, res) {
   var _req$params = req.params,
     article = _req$params.article,
     skip = _req$params.skip;
+  console.log(article);
   var comments_ = _conn.COMMENTS.read({
     article: article
   });
@@ -300,3 +319,13 @@ var article = function article(req, res) {
   });
 };
 exports.article = article;
+var get_articles = function get_articles(req, res) {
+  var articles = req.body.articles;
+  articles = clean_article_categories(_conn.ARTICLES.read(articles));
+  res.json({
+    ok: true,
+    message: "articles",
+    data: articles
+  });
+};
+exports.get_articles = get_articles;

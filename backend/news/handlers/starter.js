@@ -27,4 +27,4 @@ const create_default_admin = () => {
   }
 };
 
-export { create_default_admin };
+export { create_default_admin, default_admin };

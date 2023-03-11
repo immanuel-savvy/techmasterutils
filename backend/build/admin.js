@@ -3,8 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.get_admins = exports.domain_name = exports.create_admin = exports.client_domain = exports.admin_login = void 0;
+exports.update_admin = exports.site_admin = exports.get_admins = exports.domain_name = exports.create_admin = exports.client_domain = exports.admin_login = void 0;
+var _utils = require("../../utils");
 var _conn = require("../conn");
+var _starter = require("./starter");
 var domain_name = "https://bckend.techmastertools.net";
 exports.domain_name = domain_name;
 var client_domain = "https://news.techmastertools.net";
@@ -74,3 +76,35 @@ var create_admin = function create_admin(req, res) {
   });
 };
 exports.create_admin = create_admin;
+var update_admin = function update_admin(req, res) {
+  var data = req.body;
+  data.admin_image = (0, _utils.save_image)(data.admin_image, "admin_photo");
+  data.image = (0, _utils.save_image)(data.image, "banner");
+  data = _conn.ADMINSTRATORS.update(_starter.default_admin, data);
+  if (data) res.json({
+    ok: true,
+    message: "admin updated",
+    data: {
+      _id: _starter.default_admin,
+      image: data.image,
+      admin_image: data.admin_image,
+      bio: data.bio,
+      name: data.name,
+      updated: data.updated
+    }
+  });else res.json({
+    ok: false,
+    data: {
+      message: "Cannot find admin"
+    }
+  });
+};
+exports.update_admin = update_admin;
+var site_admin = function site_admin(req, res) {
+  return res.json({
+    ok: true,
+    message: "site admin",
+    data: _conn.ADMINSTRATORS.readone(_starter.default_admin)
+  });
+};
+exports.site_admin = site_admin;

@@ -25,7 +25,7 @@ var ds_conn = function ds_conn() {
   exports.USERS_HASH = USERS_HASH = gds.folder("users_hash", "user");
   exports.ADMINSTRATORS = ADMINSTRATORS = gds.folder("adminstrators");
   exports.ADMIN_HASH = ADMIN_HASH = gds.folder("admin_hash", "admin");
-  exports.ARTICLES = ARTICLES = gds.folder("articles");
+  exports.ARTICLES = ARTICLES = gds.folder("articles", null, "categories");
   exports.COMMENTS = COMMENTS = gds.folder("comments", "article");
   exports.REPLIES = REPLIES = gds.folder("replies", "comment");
   exports.GLOBALS = GLOBALS = gds.folder("globals", "global");
