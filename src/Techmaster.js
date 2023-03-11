@@ -37,6 +37,10 @@ class Calculators extends React.Component {
 
   set_active_section = (active_section, sidebar) =>
     this.setState({ active_section }, () => {
+      document.title = `${active_section.replace(
+        /_/g,
+        " "
+      )} | Techmaster Tools`;
       sidebar && this.toggle_sidebar();
       window.location.href = active_section;
       window.sessionStorage.setItem("active_section", active_section);

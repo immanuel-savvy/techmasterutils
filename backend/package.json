@@ -5,6 +5,7 @@
   "main": "Techmasterutils.js",
   "scripts": {
     "start": "nodemon -r esm Techmasterutils.js",
+    "build": "babel Techmasterutils.js ./news/handlers/articles.js  ./news/handlers/admin.js  ./news/handlers/starter.js  ./news/handlers/users.js  ./news/conn.js ./utils.js ./news/routes.js  -d build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Savvy",
@@ -25,6 +26,9 @@
   },
   "devDependencies": {
     "esm": "^3.2.25",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "@babel/cli": "latest",
+    "@babel/core": "^7.19.1",
+    "babel-preset-env": "^1.7.0"
   }
 }
