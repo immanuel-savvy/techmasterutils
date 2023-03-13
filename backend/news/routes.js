@@ -3,6 +3,7 @@ import {
   get_admins,
   site_admin,
   update_admin,
+  update_admin_password,
 } from "./handlers/admin";
 import {
   add_article_category,
@@ -47,6 +48,7 @@ const routes = (app) => {
   app.post("/add_article_category", add_article_category);
 
   app.post("/update_admin", update_admin);
+  app.post("/update_admin_password", update_admin_password);
 };
 
 export default routes;

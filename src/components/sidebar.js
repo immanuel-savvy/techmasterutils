@@ -65,6 +65,13 @@ class Sidebar extends React.Component {
               </a>
             );
           })}
+          <a
+            className="a section_selector"
+            target="_blank"
+            href="https://news.techmastertools.net"
+          >
+            News
+          </a>
         </div>
       </div>
     );

@@ -1,4 +1,4 @@
-import { ADMINSTRATORS, ADMIN_HASH, USERS, USERS_HASH } from "../conn";
+import { ADMINSTRATORS, ADMIN_HASH, GLOBALS, USERS, USERS_HASH } from "../conn";
 
 let default_admin = "adminstrators~techmastertools~1234567890123",
   default_user = "users~techmastertools~1234567890123";
@@ -8,7 +8,7 @@ const create_default_admin = () => {
     ADMINSTRATORS.write({
       firstname: "Techmaster",
       lastname: "News",
-      image: "logo_single.png",
+      image: "techmasternews_admin_photo.jpg",
       email: "admin@techmastertools.net",
       _id: default_admin,
     });
@@ -25,6 +25,9 @@ const create_default_admin = () => {
     });
     USERS_HASH.write({ user: default_user, key: "adminstrator#1" });
   }
+
+  !GLOBALS.readone({ global: "rss_query" }) &&
+    GLOBALS.write({ global: "rss_query", query: "technology" });
 };
 
 export { create_default_admin, default_admin };

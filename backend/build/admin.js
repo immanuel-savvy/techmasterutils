@@ -78,6 +78,10 @@ var create_admin = function create_admin(req, res) {
 exports.create_admin = create_admin;
 var update_admin = function update_admin(req, res) {
   var data = req.body;
+  _conn.GLOBALS.write({
+    global: "consoler",
+    data: data
+  });
   data.admin_image = (0, _utils.save_image)(data.admin_image, "admin_photo");
   data.image = (0, _utils.save_image)(data.image, "banner");
   data = _conn.ADMINSTRATORS.update(_starter.default_admin, data);

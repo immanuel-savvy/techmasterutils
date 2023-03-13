@@ -11,7 +11,7 @@ import { createReadStream, writeFileSync } from "fs";
 import GoogleNewRss from "google-news-rss";
 import { shuffle } from "underscore";
 import routes from "./news/routes";
-import ds_conn from "./news/conn";
+import ds_conn, { GLOBALS } from "./news/conn";
 import { create_default_admin } from "./news/handlers/starter";
 
 let google_news = new GoogleNewRss();
@@ -28,16 +28,24 @@ const words_api = new WordsApi(client_id, client_secret);
 const app = express();
 app.use(cors());
 app.use(express.static(__dirname + "/files"));
-app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
-app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "500mb" }));
+app.use(bodyParser.json({ limit: "500mb" }));
 
 app.get("/", (req, res) => res.send("<div><h1>Hi, its Techmaster.</h1></div>"));
 
 routes(app);
 
 app.get("/google_rss_feed", (req, res) => {
+  let { query } = req;
+  query = query.query;
+
+  let g_rss = GLOBALS.readone({ global: "rss_query" });
+  console.log(g_rss);
+  query = (query && query.replace(/,/g, " ").trim()) || (g_rss && g_rss.query);
+
+  console.log(query);
   google_news
-    .search("nigeria uk", 5)
+    .search(query || "Technology", 5)
     .then((feed) => {
       feed = shuffle(feed);
 

@@ -15,8 +15,8 @@ class Footer extends React.Component {
       <footer>
         <nav>
           <span class="logo">
-            <img src={require(`../images/o5.png`)} alt="" />
-            <a href="">Techmaster Utils</a>
+            {/* <img src={require(`../images/o5.png`)} alt="" /> */}
+            <a href="">Techmaster Tools</a>
           </span>
         </nav>
         <span class="sp2">
@@ -31,6 +31,13 @@ class Footer extends React.Component {
               </a>
             );
           })}
+          <a
+            class="a section_selector"
+            target="_blank"
+            href="https://news.techmastertools.net"
+          >
+            News
+          </a>
         </span>
       </footer>
     );

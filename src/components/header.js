@@ -30,6 +30,13 @@ class Header extends React.Component {
                 </a>
               );
             })}
+            <a
+              href="https://news.techmastertools.net"
+              target="_blank"
+              id="sc_1"
+            >
+              News
+            </a>
           </span>
           <i
             className="material-icons-outlined i"
