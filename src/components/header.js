@@ -35,7 +35,7 @@ class Header extends React.Component {
               target="_blank"
               id="sc_1"
             >
-              News
+              Blog
             </a>
           </span>
           <i

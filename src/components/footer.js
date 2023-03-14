@@ -36,7 +36,7 @@ class Footer extends React.Component {
             target="_blank"
             href="https://news.techmastertools.net"
           >
-            News
+            Blog
           </a>
         </span>
       </footer>

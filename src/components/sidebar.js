@@ -70,7 +70,7 @@ class Sidebar extends React.Component {
             target="_blank"
             href="https://news.techmastertools.net"
           >
-            News
+            Blog
           </a>
         </div>
       </div>

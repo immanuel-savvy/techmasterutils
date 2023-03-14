@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.update_admin = exports.site_admin = exports.get_admins = exports.domain_name = exports.create_admin = exports.client_domain = exports.admin_login = void 0;
+exports.update_admin_password = exports.update_admin = exports.site_admin = exports.get_admins = exports.domain_name = exports.create_admin = exports.client_domain = exports.admin_login = void 0;
 var _utils = require("../../utils");
 var _conn = require("../conn");
 var _starter = require("./starter");
@@ -78,9 +78,10 @@ var create_admin = function create_admin(req, res) {
 exports.create_admin = create_admin;
 var update_admin = function update_admin(req, res) {
   var data = req.body;
-  _conn.GLOBALS.write({
-    global: "consoler",
-    data: data
+  data.rss_keywords && _conn.GLOBALS.update({
+    global: "rss_query"
+  }, {
+    query: data.rss_keywords
   });
   data.admin_image = (0, _utils.save_image)(data.admin_image, "admin_photo");
   data.image = (0, _utils.save_image)(data.image, "banner");
@@ -112,3 +113,37 @@ var site_admin = function site_admin(req, res) {
   });
 };
 exports.site_admin = site_admin;
+var update_admin_password = function update_admin_password(req, res) {
+  var _req$body3 = req.body,
+    old_password = _req$body3.old_password,
+    password = _req$body3.password;
+  if (!old_password || !password) return res.json({
+    ok: false,
+    data: {
+      message: "Passwords cannot be empty"
+    }
+  });
+  var admin_hash = _conn.ADMIN_HASH.readone({
+    admin: _starter.default_admin
+  });
+  if (admin_hash.key !== old_password) return res.json({
+    ok: false,
+    data: {
+      message: "Old Password Incorrect"
+    }
+  });
+  _conn.ADMIN_HASH.update({
+    _id: admin_hash._id,
+    admin: _starter.default_admin
+  }, {
+    key: password
+  });
+  res.json({
+    ok: true,
+    data: {
+      ok: true,
+      message: "Admin Password updated successfully!"
+    }
+  });
+};
+exports.update_admin_password = update_admin_password;

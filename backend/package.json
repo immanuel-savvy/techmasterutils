@@ -5,7 +5,7 @@
   "main": "Techmasterutils.js",
   "scripts": {
     "start": "nodemon -r esm Techmasterutils.js",
-    "build": "babel ./news/handlers/admin.js  -d build",
+    "build": "babel ./news/handlers/admin.js ./news/handlers/articles.js ./news/handlers/starter.js ./news/routes.js ./Techmasterutils.js  -d build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Savvy",
