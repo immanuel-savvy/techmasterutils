@@ -179,7 +179,6 @@ const remove_article_category = (req, res) => {
 
 const comments = (req, res) => {
   let { article, skip } = req.params;
-  console.log(article);
   let comments_ = COMMENTS.read({ article });
 
   res.json({ ok: true, message: "article comments", data: comments_ });

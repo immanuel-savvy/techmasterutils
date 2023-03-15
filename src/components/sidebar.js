@@ -13,7 +13,7 @@ const sections = new Object({
     component: <Student_loan_calculator />,
     title: "Student Loan Repayment",
   },
-  pdf_to_word: { component: <PDF_to_word />, title: "PDF to Word Converter" },
+  // pdf_to_word: { component: <PDF_to_word />, title: "PDF to Word Converter" },
   password_generator: {
     component: <Password_generator />,
     title: "Password Generator",

@@ -123,30 +123,34 @@ class Password_generator extends React.Component {
                 <option value="29">29</option>
                 <option value="30">30</option>
               </select>
-              <p>Password length (limit 30)</p>
+              <p style={{ marginTop: 18 }}>Password length (limit 30)</p>
             </div>
             <div className="flex">
               <label for="lalpha">
                 <input type="checkbox" name="" id="lalpha" />
-                <p>Lowercase letters [abcdefghijkmnpqrstuvwxyz]</p>
+                <p style={{ marginTop: 18 }}>
+                  Lowercase letters [abcdefghijkmnpqrstuvwxyz]
+                </p>
               </label>
             </div>
             <div className="flex">
               <label for="ualpha">
                 <input type="checkbox" name="" id="ualpha" />
-                <p>Uppercase letters [ABCDEFGHJKLMNPQRSTUVWXYZ]</p>
+                <p style={{ marginTop: 18 }}>
+                  Uppercase letters [ABCDEFGHJKLMNPQRSTUVWXYZ]
+                </p>
               </label>
             </div>
             <div className="flex">
               <label for="digits">
                 <input type="checkbox" name="" id="digits" />
-                <p>Digits [23456789]</p>
+                <p style={{ marginTop: 18 }}>Digits [23456789]</p>
               </label>
             </div>
             <div className="flex">
               <label for="symbols">
                 <input type="checkbox" name="" id="symbols" />
-                <p>Symbols [!#$%&()*+-=?[]{}|~@^_]</p>
+                <p style={{ marginTop: 18 }}>Symbols [!#$%&()*+-=?[]{}|~@^_]</p>
               </label>
             </div>
 
@@ -166,7 +170,7 @@ class Password_generator extends React.Component {
                   style={{
                     width: "100%",
                     textAlign: "center",
-                    marginTop: 10,
+                    marginTop: 18,
                   }}
                 >
                   <div style={{ fontWeight: "bold" }}>Your Password:</div>
