@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 import Loadindicator from "../components/loadindicator";
+import Tools from "../contexts";
 import { client_domain, get_request } from "../libs/services";
 
 const commalise_figures = (figure) => {
@@ -253,201 +254,187 @@ class IP extends React.Component {
     } = this.state;
 
     return (
-      <section className="section">
-        <div className="top">
-          <div className="text">
-            <h1>IPv4 / IPv6 Subnet Calculator</h1>
-            <p>
-              Subnet calculator performs network calculations using IP address.
-              Mask bits, determines the resulting broadcast address, subnet, and
-              more.
-            </p>
-          </div>
-          <div>
-            <img
-              src={`${client_domain}/images/plug.svg`}
-              style={{ width: "100%" }}
-              className="img"
-            />
-          </div>
-        </div>
-        {result ? (
-          <h3 style={{ marginTop: 50 }}>IPv4 Subnet Information</h3>
-        ) : null}
-        {calculating ? (
-          <Loadindicator
-            style={{ marginTop: 50 }}
-            text="fetching subnet details"
-          />
-        ) : result ? (
-          this.render_result(result, result_header)
-        ) : (
-          <></>
-        )}
+      <Tools.Consumer>
+        {({ data, active_tab }) => {
+          let { title, sub_text, body_text } = data[active_tab];
 
-        {result6 ? (
-          <h3 style={{ marginTop: 50 }}>IPv6 Subnet Information</h3>
-        ) : null}
-        {result6 ? this.render_result(result6, result_header6) : null}
-
-        <div style={{ marginTop: 25 }} className="content">
-          <form action="">
-            <div
-              style={{
-                boxShadow: "rgba(0, 0, 0, 0.3) 5px 14px 12px",
-                width: "100%",
-                padding: 14,
-                borderRadius: 20,
-              }}
-            >
-              <h4
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                }}
-              >
-                IPv4
-              </h4>
-              <label for="IP address">IP address</label>
-              <input
-                type="text"
-                value={ip}
-                name="IP address"
-                onChange={({ target }) => this.set_ip(target.value)}
-                placeholder="(e.g. 192.168.1.1)"
-              />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <span style={{ marginRight: 5, width: "100%" }}>
-                  <label for="port number">Subnet Mask</label>
-                  <div className="flex">
-                    <div className="select">
-                      <select
-                        id="selection"
-                        defaultValue={"32"}
-                        onChange={({ target }) => {
-                          this.setState({ mask: target.value });
-                        }}
-                        aria-valuenow="20"
-                      >
-                        {masks.map((msk, index) => (
-                          <option key={msk} value={32 - index}>
-                            {msk} /{32 - index}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                </span>
+          return (
+            <section className="section">
+              <div className="top">
+                <div className="text">
+                  <h1>{title}</h1>
+                  <p>{sub_text}</p>
+                </div>
+                <div>
+                  <img
+                    src={`${client_domain}/images/plug.svg`}
+                    style={{ width: "100%" }}
+                    className="img"
+                  />
+                </div>
               </div>
+              {result ? (
+                <h3 style={{ marginTop: 50 }}>IPv4 Subnet Information</h3>
+              ) : null}
+              {calculating ? (
+                <Loadindicator
+                  style={{ marginTop: 50 }}
+                  text="fetching subnet details"
+                />
+              ) : result ? (
+                this.render_result(result, result_header)
+              ) : (
+                <></>
+              )}
 
-              <label for="">
-                Your IP Address* <span>{(your_ip && your_ip.ip) || "..."}</span>
-              </label>
-              <span className="fl">
-                <button onClick={this.calculate}>
-                  {calculating ? "Calculating..." : "Calculate"}
-                </button>
-                <a href="#" className="cancel" onClick={this.clear}>
-                  Clear <i className="material-icons-outlined">close</i>
-                </a>
-              </span>
-            </div>
-            <hr />
+              {result6 ? (
+                <h3 style={{ marginTop: 50 }}>IPv6 Subnet Information</h3>
+              ) : null}
+              {result6 ? this.render_result(result6, result_header6) : null}
 
-            <div
-              style={{
-                boxShadow: "rgba(0, 0, 0, 0.3) 5px 14px 12px",
-                width: "100%",
-                padding: 14,
-                borderRadius: 20,
-              }}
-            >
-              <h4 style={{ textAlign: "center", width: "100%" }}>IPv6</h4>
-              <label for="IP address">IP address</label>
-              <input
-                type="text"
-                value={ipv6}
-                name="IPv6 address"
-                onChange={({ target }) => this.set_ip(target.value)}
-                placeholder={"fa60::8e71:0021:cb6e:e31c"}
-              />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <span style={{ marginRight: 5, width: "100%" }}>
-                  <label for="port number">Prefix length</label>
-                  <div className="flex">
-                    <div className="select">
-                      <select
-                        id="selection"
-                        defaultValue={"64"}
-                        onChange={({ target }) => {
-                          this.setState({ v6_mask: target.value });
-                        }}
-                        aria-valuenow="20"
-                      >
-                        {v6mask.map((msk) => (
-                          <option key={msk} value={msk.toString()}>
-                            /{msk}
-                          </option>
-                        ))}
-                      </select>
+              <div style={{ marginTop: 25 }} className="content">
+                <form action="">
+                  <div
+                    style={{
+                      boxShadow: "rgba(0, 0, 0, 0.3) 5px 14px 12px",
+                      width: "100%",
+                      padding: 14,
+                      borderRadius: 20,
+                    }}
+                  >
+                    <h4
+                      style={{
+                        width: "100%",
+                        textAlign: "center",
+                      }}
+                    >
+                      IPv4
+                    </h4>
+                    <label for="IP address">IP address</label>
+                    <input
+                      type="text"
+                      value={ip}
+                      name="IP address"
+                      onChange={({ target }) => this.set_ip(target.value)}
+                      placeholder="(e.g. 192.168.1.1)"
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <span style={{ marginRight: 5, width: "100%" }}>
+                        <label for="port number">Subnet Mask</label>
+                        <div className="flex">
+                          <div className="select">
+                            <select
+                              id="selection"
+                              defaultValue={"32"}
+                              onChange={({ target }) => {
+                                this.setState({ mask: target.value });
+                              }}
+                              aria-valuenow="20"
+                            >
+                              {masks.map((msk, index) => (
+                                <option key={msk} value={32 - index}>
+                                  {msk} /{32 - index}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </span>
                     </div>
-                  </div>
-                </span>
-              </div>
 
-              <span className="fl">
-                <button onClick={this.calculate_v6}>Calculate</button>
-                <a
-                  href="#"
-                  className="cancel"
-                  onClick={(e) => this.clear(e, 6)}
-                >
-                  Clear <i className="material-icons-outlined">close</i>
-                </a>
-              </span>
-            </div>
-          </form>
-          <div className="text">
-            <p className="title">About IPv4 Subnet Calculator</p>
-            <p className="sub_txt" id="exp_txt">
-              Enter IP address and netmask (decimal separated by dots (e.g.
-              255.255.255.0), CIDR (e.g. 29) and the IPv4 subnet calculator will
-              calculate the broadcast, network, Cisco wildcard mask, host range
-              and quantity of hosts. Online and for free. The wildcard is the
-              inverse netmask used for access control lists (ACL's) in Cisco
-              routers. This free online IPv4 subnet calculator also can be used
-              as a teaching tool and presents the subnetting results as
-              easy-to-understand binary values. We can see two things: all host
-              bits are zeroes in a network address, in a broadcast address they
-              are all set. First bits determine the class of your network from A
-              to E. A, B and C are commonly used. Each class has a range of
-              valid IP addresses. Address Range of Class A - 1.0.0.1 to
-              126.255.255.254 (supports 16 million hosts on each of 127
-              networks). Class B - 128.1.0.1 to 191.255.255.254 (65,000 hosts on
-              each of 16,000 networks). Class C - 192.0.1.1 to 223.255.254.254
-              (254 hosts on each of 2 million networks). Class D - 224.0.0.0 to
-              239.255.255.255 (address range reserved for multicast groups).
-              Class E - 240.0.0.0 to 254.255.255.254 (reserved for future use,
-              research and development purposes).Your IP addressYour are from
-              Switzerland146.70.99.240
-            </p>
-          </div>
-        </div>
-      </section>
+                    <label for="">
+                      Your IP Address*{" "}
+                      <span>{(your_ip && your_ip.ip) || "..."}</span>
+                    </label>
+                    <span className="fl">
+                      <button onClick={this.calculate}>
+                        {calculating ? "Calculating..." : "Calculate"}
+                      </button>
+                      <a href="#" className="cancel" onClick={this.clear}>
+                        Clear <i className="material-icons-outlined">close</i>
+                      </a>
+                    </span>
+                  </div>
+                  <hr />
+
+                  <div
+                    style={{
+                      boxShadow: "rgba(0, 0, 0, 0.3) 5px 14px 12px",
+                      width: "100%",
+                      padding: 14,
+                      borderRadius: 20,
+                    }}
+                  >
+                    <h4 style={{ textAlign: "center", width: "100%" }}>IPv6</h4>
+                    <label for="IP address">IP address</label>
+                    <input
+                      type="text"
+                      value={ipv6}
+                      name="IPv6 address"
+                      onChange={({ target }) => this.set_ip(target.value)}
+                      placeholder={"fa60::8e71:0021:cb6e:e31c"}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <span style={{ marginRight: 5, width: "100%" }}>
+                        <label for="port number">Prefix length</label>
+                        <div className="flex">
+                          <div className="select">
+                            <select
+                              id="selection"
+                              defaultValue={"64"}
+                              onChange={({ target }) => {
+                                this.setState({ v6_mask: target.value });
+                              }}
+                              aria-valuenow="20"
+                            >
+                              {v6mask.map((msk) => (
+                                <option key={msk} value={msk.toString()}>
+                                  /{msk}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+
+                    <span className="fl">
+                      <button onClick={this.calculate_v6}>Calculate</button>
+                      <a
+                        href="#"
+                        className="cancel"
+                        onClick={(e) => this.clear(e, 6)}
+                      >
+                        Clear <i className="material-icons-outlined">close</i>
+                      </a>
+                    </span>
+                  </div>
+                </form>
+                <div className="text">
+                  <p className="title">About {title}</p>
+                  <p className="sub_txt" id="exp_txt">
+                    {body_text}
+                  </p>
+                </div>
+              </div>
+            </section>
+          );
+        }}
+      </Tools.Consumer>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Tools from "../contexts";
 import { client_domain } from "../libs/services";
 
 const gen_random_int = (max_int, min_int = 0) =>
@@ -61,182 +62,172 @@ class Password_generator extends React.Component {
     let { password, copied } = this.state;
 
     return (
-      <section className="section">
-        <div className="top">
-          <div className="text">
-            <h1>Password Generator/Decryptor</h1>
-            <p>
-              Techmaster Utils password generator creates random passwords based
-              on parameters set by you. Parameters include password length,
-              character combination et cetera.
-            </p>
-          </div>
-          <div>
-            <img
-              src={`${client_domain}/images/password.svg`}
-              style={{ width: "100%" }}
-              className="img"
-            />
-          </div>
-        </div>
-        <div className="content" style={{ marginTop: 40 }}>
-          <form action="" className="pass_form">
-            <div className="flex">
-              <select
-                name=""
-                id=""
-                onChange={({ target }) => {
-                  this.setState({ length: target.value });
-                }}
-                aria-valuenow="20"
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option default selected value="8">
-                  8
-                </option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-              </select>
-              <p style={{ marginTop: 18 }}>Password length (limit 30)</p>
-            </div>
-            <div className="flex">
-              <label for="lalpha">
-                <input type="checkbox" name="" id="lalpha" />
-                <p style={{ marginTop: 18 }}>
-                  Lowercase letters [abcdefghijkmnpqrstuvwxyz]
-                </p>
-              </label>
-            </div>
-            <div className="flex">
-              <label for="ualpha">
-                <input type="checkbox" name="" id="ualpha" />
-                <p style={{ marginTop: 18 }}>
-                  Uppercase letters [ABCDEFGHJKLMNPQRSTUVWXYZ]
-                </p>
-              </label>
-            </div>
-            <div className="flex">
-              <label for="digits">
-                <input type="checkbox" name="" id="digits" />
-                <p style={{ marginTop: 18 }}>Digits [23456789]</p>
-              </label>
-            </div>
-            <div className="flex">
-              <label for="symbols">
-                <input type="checkbox" name="" id="symbols" />
-                <p style={{ marginTop: 18 }}>Symbols [!#$%&()*+-=?[]{}|~@^_]</p>
-              </label>
-            </div>
+      <Tools.Consumer>
+        {({ data, active_tab }) => {
+          let { title, sub_text, body_text } = data[active_tab];
 
-            <span className="fl">
-              <button onClick={this.generate} type="submit">
-                Generate
-              </button>
-              <a href="#" className="cancel" onClick={this.clear}>
-                Clear <i className="material-icons-outlined">close</i>
-              </a>
-            </span>
-
-            {password ? (
-              <>
-                <hr />
-                <div
-                  style={{
-                    width: "100%",
-                    textAlign: "center",
-                    marginTop: 18,
-                  }}
-                >
-                  <div style={{ fontWeight: "bold" }}>Your Password:</div>
-
-                  <CopyToClipboard text={password} onCopy={this.copy_alert}>
-                    <div
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        verticalAlign: "center",
-                        textAlign: "center",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <span style={{ fontSize: 22 }}>
-                        &nbsp;&nbsp;{`${password}`} &nbsp;
-                      </span>
-
-                      <span>
-                        <i
-                          style={{ color: "rgb(30, 144, 255, 0.8)" }}
-                          className="material-icons-outlined"
-                        >
-                          copy
-                        </i>
-                      </span>
-                    </div>
-                  </CopyToClipboard>
-
-                  {copied ? (
-                    <div className="alert alert-info" role="alert">
-                      Password copied to clipboard!
-                    </div>
-                  ) : null}
+          return (
+            <section className="section">
+              <div className="top">
+                <div className="text">
+                  <h1>{title}</h1>
+                  <p>{sub_text}</p>
                 </div>
-              </>
-            ) : null}
-          </form>
+                <div>
+                  <img
+                    src={`${client_domain}/images/password.svg`}
+                    style={{ width: "100%" }}
+                    className="img"
+                  />
+                </div>
+              </div>
+              <div className="content" style={{ marginTop: 40 }}>
+                <form action="" className="pass_form">
+                  <div className="flex">
+                    <select
+                      name=""
+                      id=""
+                      onChange={({ target }) => {
+                        this.setState({ length: target.value });
+                      }}
+                      aria-valuenow="20"
+                    >
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option default selected value="8">
+                        8
+                      </option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">20</option>
+                      <option value="21">21</option>
+                      <option value="22">22</option>
+                      <option value="23">23</option>
+                      <option value="24">24</option>
+                      <option value="25">25</option>
+                      <option value="26">26</option>
+                      <option value="27">27</option>
+                      <option value="28">28</option>
+                      <option value="29">29</option>
+                      <option value="30">30</option>
+                    </select>
+                    <p style={{ marginTop: 18 }}>Password length (limit 30)</p>
+                  </div>
+                  <div className="flex">
+                    <label for="lalpha">
+                      <input type="checkbox" name="" id="lalpha" />
+                      <p style={{ marginTop: 18 }}>
+                        Lowercase letters [abcdefghijkmnpqrstuvwxyz]
+                      </p>
+                    </label>
+                  </div>
+                  <div className="flex">
+                    <label for="ualpha">
+                      <input type="checkbox" name="" id="ualpha" />
+                      <p style={{ marginTop: 18 }}>
+                        Uppercase letters [ABCDEFGHJKLMNPQRSTUVWXYZ]
+                      </p>
+                    </label>
+                  </div>
+                  <div className="flex">
+                    <label for="digits">
+                      <input type="checkbox" name="" id="digits" />
+                      <p style={{ marginTop: 18 }}>Digits [23456789]</p>
+                    </label>
+                  </div>
+                  <div className="flex">
+                    <label for="symbols">
+                      <input type="checkbox" name="" id="symbols" />
+                      <p style={{ marginTop: 18 }}>
+                        Symbols [!#$%&()*+-=?[]{}|~@^_]
+                      </p>
+                    </label>
+                  </div>
 
-          <div className="text">
-            <p className="title">About passwords</p>
-            <p className="sub_txt" id="exp_txt">
-              Password - a secret series of characters that enables a user to
-              access a file, computer, program or something secured with secret
-              code. Remember! The easier a password is for the owner to remember
-              generally means it will be easier for an attacker to guess. The
-              strength of a password depends on the different types of
-              characters, the overall length of the password, and whether the
-              password can be found in a dictionary. To avoid brute force attack
-              (crack passwords by trying as many possibilities as time and money
-              permit) or more efficient in most cases, dictionary attack (and
-              lists of common passwords are also typically tested) use long (at
-              least 12 characters or more) passwords with letters (mixed
-              lowercase and uppercase), punctuation, symbols, and numbers. Don't
-              use dictionary words (in any language). Words are vulnerable.
-              Avoid words spelled backwards, common misspellings, and
-              abbreviations. Words in all languages are vulnerable. Don't use
-              sequences or repeated characters, e.g. 12345678, 222222, abcdefg,
-              qwerty. Don't use personal information: your name, wife's name,
-              birthday, driver's license, passport number or similar info. The
-              best way to create a secure and strong password - use our Strong
-              Password Generator:)
-            </p>
-          </div>
-        </div>
-      </section>
+                  <span className="fl">
+                    <button onClick={this.generate} type="submit">
+                      Generate
+                    </button>
+                    <a href="#" className="cancel" onClick={this.clear}>
+                      Clear <i className="material-icons-outlined">close</i>
+                    </a>
+                  </span>
+
+                  {password ? (
+                    <>
+                      <hr />
+                      <div
+                        style={{
+                          width: "100%",
+                          textAlign: "center",
+                          marginTop: 18,
+                        }}
+                      >
+                        <div style={{ fontWeight: "bold" }}>Your Password:</div>
+
+                        <CopyToClipboard
+                          text={password}
+                          onCopy={this.copy_alert}
+                        >
+                          <div
+                            style={{
+                              justifyContent: "center",
+                              alignItems: "center",
+                              verticalAlign: "center",
+                              textAlign: "center",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <span style={{ fontSize: 22 }}>
+                              &nbsp;&nbsp;{`${password}`} &nbsp;
+                            </span>
+
+                            <span>
+                              <i
+                                style={{ color: "rgb(30, 144, 255, 0.8)" }}
+                                className="material-icons-outlined"
+                              >
+                                copy
+                              </i>
+                            </span>
+                          </div>
+                        </CopyToClipboard>
+
+                        {copied ? (
+                          <div className="alert alert-info" role="alert">
+                            Password copied to clipboard!
+                          </div>
+                        ) : null}
+                      </div>
+                    </>
+                  ) : null}
+                </form>
+
+                <div className="text">
+                  <p className="title">About {title}</p>
+                  <p className="sub_txt" id="exp_txt">
+                    {body_text}
+                  </p>
+                </div>
+              </div>
+            </section>
+          );
+        }}
+      </Tools.Consumer>
     );
   }
 }

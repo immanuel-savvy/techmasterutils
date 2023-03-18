@@ -1,3 +1,4 @@
+import { tools_data, update_tool_data } from "../tools";
 import {
   admin_login,
   get_admins,
@@ -30,6 +31,7 @@ const routes = (app) => {
   app.get("/site_admin", site_admin);
   app.get("/comments/:article/:skip", comments);
   app.get("/article_categories", article_categories);
+  app.get("/tools_data", tools_data);
 
   app.post("/admin_login", admin_login);
 
@@ -49,6 +51,9 @@ const routes = (app) => {
 
   app.post("/update_admin", update_admin);
   app.post("/update_admin_password", update_admin_password);
+
+  // Tools
+  app.post("/update_tool_data", update_tool_data);
 };
 
 export default routes;

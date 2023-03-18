@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _tools = require("../tools");
 var _admin = require("./handlers/admin");
 var _articles = require("./handlers/articles");
 var _users = require("./handlers/users");
@@ -13,6 +14,7 @@ var routes = function routes(app) {
   app.get("/site_admin", _admin.site_admin);
   app.get("/comments/:article/:skip", _articles.comments);
   app.get("/article_categories", _articles.article_categories);
+  app.get("/tools_data", _tools.tools_data);
   app.post("/admin_login", _admin.admin_login);
   app.post("/articles", _articles.articles);
   app.post("/get_articles", _articles.get_articles);
@@ -29,6 +31,9 @@ var routes = function routes(app) {
   app.post("/add_article_category", _articles.add_article_category);
   app.post("/update_admin", _admin.update_admin);
   app.post("/update_admin_password", _admin.update_admin_password);
+
+  // Tools
+  app.post("/update_tool_data", _tools.update_tool_data);
 };
 var _default = routes;
 exports.default = _default;

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Loadindicator = ({ text, style }) => (
+const Loadindicator = ({ no_text, text, style }) => (
   <span
     style={{
       textAlign: "center",
@@ -14,7 +14,7 @@ const Loadindicator = ({ text, style }) => (
       src={require("../images/ajax-loader.gif")}
     />
     <br />
-    <span>{text || "Converting"}...</span>
+    {no_text ? null : <span>{text || "Converting"}...</span>}
   </span>
 );
 

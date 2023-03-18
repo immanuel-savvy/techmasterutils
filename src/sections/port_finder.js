@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
+import Tools from "../contexts";
 import { client_domain } from "../libs/services";
 
 class Port_finder extends React.Component {
@@ -54,116 +55,100 @@ class Port_finder extends React.Component {
     let { value, headers, result } = this.state;
 
     return (
-      <section className="section">
-        <div className="top">
-          <div className="text">
-            <h1>TCP/UDP Port Finder</h1>
-            <p>
-              Internet free online TCP UDP ports lookup and search. Enter port
-              number or service name and get all info about current udp tcp port
-              or ports.
-            </p>
-          </div>
-          <div>
-            <img
-              src={`${client_domain}/images/port.webp`}
-              style={{ width: "100%" }}
-              className="img"
-            />
-          </div>
-        </div>
-        <div className="content" style={{ marginTop: 40 }}>
-          <form action="">
-            <label for="port number">Port number or name:</label>
-            <input
-              type="text"
-              name=""
-              value={value}
-              placeholder=""
-              id=""
-              onChange={({ target }) => this.setState({ value: target.value })}
-            />
-            <label for="">
-              <span>
-                Enter port number (e.g. 21), service (e.g. ssh, ftp) or threat
-                (e.g. nimda)
-              </span>
-            </label>
-            <br />
-            <label for="">
-              <span>Database updated - March 30, 2016</span>
-            </label>
-            <span className="fl">
-              <button onClick={this.search}>Search</button>
-              <a href="#" className="cancel" onClick={this.clear}>
-                Clear <i className="material-icons-outlined">close</i>
-              </a>
-            </span>
-          </form>
-          <div className="text">
-            <p className="title">About TCP/UDP ports</p>
-            <p className="sub_txt" id="exp_txt">
-              TCP port uses the Transmission Control Protocol. TCP is one of the
-              main protocols in TCP/IP networks. TCP is a connection-oriented
-              protocol, it requires handshaking to set up end-to-end
-              communications. Only when a connection is set up user's data can
-              be sent bi-directionally over the connection. Attention! TCP
-              guarantees delivery of data packets in the same order in which
-              they were sent. Guaranteed communication over TCP port is the main
-              difference between TCP and UDP. UDP port would not have guaranteed
-              communication as TCP. UDP provides an unreliable service and
-              datagrams may arrive duplicated, out of order, or missing without
-              notice. UDP thinks that error checking and correction is not
-              necessary or performed in the application, avoiding the overhead
-              of such processing at the network interface level. UDP (User
-              Datagram Protocol) is a minimal message-oriented Transport Layer
-              protocol (protocol is documented in IETF RFC 768). Application
-              examples that often use UDP: voice over IP (VoIP), streaming media
-              and real-time multiplayer games. Many web applications use UDP,
-              e.g. the Domain Name System (DNS), the Routing Information
-              Protocol (RIP), the Dynamic Host Configuration Protocol (DHCP),
-              the Simple Network Management Protocol (SNMP). TCP vs UDP - TCP:
-              reliable, ordered, heavyweight, streaming; UDP - unreliable, not
-              ordered, lightweight, datagrams.Your IP addressYour are from
-              Switzerland146.70.99.199
-            </p>
-          </div>
-        </div>
+      <Tools.Consumer>
+        {({ data, active_tab }) => {
+          let { title, sub_text, body_text, image } = data[active_tab];
 
-        <div
-          className="content"
-          id="result"
-          style={{
-            overflow: "scroll",
-          }}
-        >
-          {result.length ? (
-            <Table striped bordered hover responsive>
-              <thead>
-                <tr>
-                  {headers.map((header) => (
-                    <th key={header}>{header}</th>
-                  ))}
-                </tr>
-              </thead>
+          return (
+            <section className="section">
+              <div className="top">
+                <div className="text">
+                  <h1>{title}</h1>
+                  <p>{sub_text}</p>
+                </div>
+                <div>
+                  <img
+                    src={`${client_domain}/${image || "images/port.webp"}`}
+                    style={{ width: "100%" }}
+                    className="img"
+                  />
+                </div>
+              </div>
+              <div className="content" style={{ marginTop: 40 }}>
+                <form action="">
+                  <label for="port number">Port number or name:</label>
+                  <input
+                    type="text"
+                    name=""
+                    value={value}
+                    placeholder=""
+                    id=""
+                    onChange={({ target }) =>
+                      this.setState({ value: target.value })
+                    }
+                  />
+                  <label for="">
+                    <span>
+                      Enter port number (e.g. 21), service (e.g. ssh, ftp) or
+                      threat (e.g. nimda)
+                    </span>
+                  </label>
+                  <br />
+                  <label for="">
+                    <span>Database updated - March 30, 2016</span>
+                  </label>
+                  <span className="fl">
+                    <button onClick={this.search}>Search</button>
+                    <a href="#" className="cancel" onClick={this.clear}>
+                      Clear <i className="material-icons-outlined">close</i>
+                    </a>
+                  </span>
+                </form>
+                <div className="text">
+                  <p className="title">About {title}</p>
+                  <p className="sub_txt" id="exp_txt">
+                    {body_text}
+                  </p>
+                </div>
+              </div>
 
-              <tbody>
-                {result.map((res, index) => {
-                  return (
-                    <tr key={index}>
-                      {headers.map((header) => (
-                        <td key={header}>{res[header]}</td>
-                      ))}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          ) : (
-            <></>
-          )}
-        </div>
-      </section>
+              <div
+                className="content"
+                id="result"
+                style={{
+                  overflow: "scroll",
+                }}
+              >
+                {result.length ? (
+                  <Table striped bordered hover responsive>
+                    <thead>
+                      <tr>
+                        {headers.map((header) => (
+                          <th key={header}>{header}</th>
+                        ))}
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {result.map((res, index) => {
+                        return (
+                          <tr key={index}>
+                            {headers.map((header) => (
+                              <td key={header}>{res[header]}</td>
+                            ))}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </section>
+          );
+        }}
+      </Tools.Consumer>
     );
   }
 }

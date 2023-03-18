@@ -10,6 +10,7 @@ let USERS,
   COMMENTS,
   GLOBALS,
   REPLIES,
+  TOOLS,
   TRENDING_ARTICLES,
   ARTICLE_CATEGORIES;
 
@@ -24,6 +25,7 @@ const ds_conn = () => {
   COMMENTS = gds.folder("comments", "article");
   REPLIES = gds.folder("replies", "comment");
   GLOBALS = gds.folder("globals", "global");
+  TOOLS = gds.folder("tools");
   ARTICLE_CATEGORIES = gds.folder("article_categories");
   TRENDING_ARTICLES = gds.folder("trending_articles", null, "article");
 };
@@ -38,6 +40,7 @@ export {
   COMMENTS,
   REPLIES,
   GLOBALS,
+  TOOLS,
   TRENDING_ARTICLES,
   ARTICLE_CATEGORIES,
   gds,
