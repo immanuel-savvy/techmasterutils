@@ -3,10 +3,11 @@ import { Col, Container, Row, Table } from "react-bootstrap";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
 import Bar_chart from "../components/bar_chart";
+import Body_text from "../components/body_text";
 import Line_chart from "../components/line_chart";
 import Pie_chart from "../components/pie_chart";
 import Tools from "../contexts";
-import { client_domain } from "../libs/services";
+import { domain } from "../libs/services";
 import { commalise_figures } from "./ip";
 
 class Student_loan_calculator extends React.Component {
@@ -199,7 +200,7 @@ class Student_loan_calculator extends React.Component {
                 </div>
                 <div>
                   <img
-                    src={`${client_domain}/images/calculator.svg`}
+                    src={`${domain}/images/${active_tab}.png`}
                     style={{ width: "100%" }}
                     className="img"
                   />
@@ -329,21 +330,7 @@ class Student_loan_calculator extends React.Component {
                     </a>
                   </span>
                 </form>
-                <div className="text sm_screen">
-                  <p className="title">About {title}</p>
-                  <p className="sub_txt">
-                    {body_text.slice(0, this.state.expanded ? -1 : 500)}
-                  </p>
-                  <p
-                    style={{ cursor: "pointer" }}
-                    class="exp"
-                    onClick={() =>
-                      this.setState({ expanded: !this.state.expanded })
-                    }
-                  >
-                    Expand <i class="material-icons-outlined">expand_more</i>
-                  </p>
-                </div>
+                <Body_text title={title} body_text={body_text} />
               </div>
 
               {result ? (

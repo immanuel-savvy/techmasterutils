@@ -1,7 +1,8 @@
 import React from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Body_text from "../components/body_text";
 import Tools from "../contexts";
-import { client_domain } from "../libs/services";
+import { domain } from "../libs/services";
 
 const gen_random_int = (max_int, min_int = 0) =>
   min_int + Math.floor(Math.random() * max_int);
@@ -75,7 +76,7 @@ class Password_generator extends React.Component {
                 </div>
                 <div>
                   <img
-                    src={`${client_domain}/images/password.svg`}
+                    src={`${domain}/images/${active_tab}.png`}
                     style={{ width: "100%" }}
                     className="img"
                   />
@@ -217,21 +218,7 @@ class Password_generator extends React.Component {
                   ) : null}
                 </form>
 
-                <div className="text">
-                  <p className="title">About {title}</p>
-                  <p className="sub_txt">
-                    {body_text.slice(0, this.state.expanded ? -1 : 500)}
-                  </p>
-                  <p
-                    style={{ cursor: "pointer" }}
-                    class="exp"
-                    onClick={() =>
-                      this.setState({ expanded: !this.state.expanded })
-                    }
-                  >
-                    Expand <i class="material-icons-outlined">expand_more</i>
-                  </p>
-                </div>
+                <Body_text title={title} body_text={body_text} />
               </div>
             </section>
           );

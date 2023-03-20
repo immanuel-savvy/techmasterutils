@@ -1,8 +1,9 @@
 import React from "react";
 import { Table } from "react-bootstrap";
+import Body_text from "../components/body_text";
 import Loadindicator from "../components/loadindicator";
 import Tools from "../contexts";
-import { client_domain, get_request } from "../libs/services";
+import { client_domain, domain, get_request } from "../libs/services";
 
 const commalise_figures = (figure) => {
   if (typeof figure !== "number") return figure;
@@ -267,7 +268,7 @@ class IP extends React.Component {
                 </div>
                 <div>
                   <img
-                    src={`${client_domain}/images/plug.svg`}
+                    src={`${domain}/images/${active_tab}.png`}
                     style={{ width: "100%" }}
                     className="img"
                   />
@@ -424,21 +425,7 @@ class IP extends React.Component {
                     </span>
                   </div>
                 </form>
-                <div className="text">
-                  <p className="title">About {title}</p>
-                  <p className="sub_txt">
-                    {body_text.slice(0, this.state.expanded ? -1 : 500)}
-                  </p>
-                  <p
-                    style={{ cursor: "pointer" }}
-                    class="exp"
-                    onClick={() =>
-                      this.setState({ expanded: !this.state.expanded })
-                    }
-                  >
-                    Expand <i class="material-icons-outlined">expand_more</i>
-                  </p>
-                </div>
+                <Body_text title={title} body_text={body_text} />
               </div>
             </section>
           );

@@ -1,7 +1,8 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
+import Body_text from "../components/body_text";
 import Tools from "../contexts";
-import { client_domain } from "../libs/services";
+import { domain } from "../libs/services";
 
 class Port_finder extends React.Component {
   constructor(props) {
@@ -68,7 +69,7 @@ class Port_finder extends React.Component {
                 </div>
                 <div>
                   <img
-                    src={`${client_domain}/${image || "images/port.webp"}`}
+                    src={`${domain}/images/${active_tab}.png`}
                     style={{ width: "100%" }}
                     className="img"
                   />
@@ -104,21 +105,7 @@ class Port_finder extends React.Component {
                     </a>
                   </span>
                 </form>
-                <div className="text">
-                  <p className="title">About {title}</p>
-                  <p className="sub_txt">
-                    {body_text.slice(0, this.state.expanded ? -1 : 500)}
-                  </p>
-                  <p
-                    style={{ cursor: "pointer" }}
-                    class="exp"
-                    onClick={() =>
-                      this.setState({ expanded: !this.state.expanded })
-                    }
-                  >
-                    Expand <i class="material-icons-outlined">expand_more</i>
-                  </p>
-                </div>
+                <Body_text title={title} body_text={body_text} />
               </div>
 
               <div
