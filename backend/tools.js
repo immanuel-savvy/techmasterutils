@@ -4,7 +4,7 @@ import { save_image } from "./utils";
 const update_tool_data = (req, res) => {
   let data = req.body;
 
-  data.image = save_image(data.image);
+  data.image = save_image(data.image, data.tool, "png");
 
   TOOLS.update({ tool: data.tool }, data);
 

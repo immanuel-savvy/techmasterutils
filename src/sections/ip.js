@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import Body_text from "../components/body_text";
 import Loadindicator from "../components/loadindicator";
+import Preview_image from "../components/preview_image";
 import Tools from "../contexts";
 import { client_domain, domain, get_request } from "../libs/services";
 
@@ -243,7 +244,6 @@ class IP extends React.Component {
     let {
       your_ip,
       result,
-      is_v6,
       ipv6,
       v6mask,
       calculating,
@@ -257,7 +257,8 @@ class IP extends React.Component {
     return (
       <Tools.Consumer>
         {({ data, active_tab }) => {
-          let { title, sub_text, body_text } = data[active_tab];
+          let { title, sub_text, image, image_hash, body_text } =
+            data[active_tab];
 
           return (
             <section className="section">
@@ -267,10 +268,11 @@ class IP extends React.Component {
                   <p>{sub_text}</p>
                 </div>
                 <div>
-                  <img
-                    src={`${domain}/images/${active_tab}.png`}
+                  <Preview_image
+                    image={image || `${active_tab}.png`}
+                    image_hash={image_hash}
+                    class_name="img"
                     style={{ width: "100%" }}
-                    className="img"
                   />
                 </div>
               </div>

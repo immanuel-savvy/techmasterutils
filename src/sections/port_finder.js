@@ -1,6 +1,7 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 import Body_text from "../components/body_text";
+import Preview_image from "../components/preview_image";
 import Tools from "../contexts";
 import { domain } from "../libs/services";
 
@@ -58,7 +59,8 @@ class Port_finder extends React.Component {
     return (
       <Tools.Consumer>
         {({ data, active_tab }) => {
-          let { title, sub_text, body_text, image } = data[active_tab];
+          let { title, sub_text, body_text, image, image_hash } =
+            data[active_tab];
 
           return (
             <section className="section">
@@ -68,10 +70,11 @@ class Port_finder extends React.Component {
                   <p>{sub_text}</p>
                 </div>
                 <div>
-                  <img
-                    src={`${domain}/images/${active_tab}.png`}
+                  <Preview_image
+                    image={image || `${active_tab}.png`}
+                    image_hash={image_hash}
+                    class_name="img"
                     style={{ width: "100%" }}
-                    className="img"
                   />
                 </div>
               </div>

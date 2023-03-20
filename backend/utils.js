@@ -9,13 +9,15 @@ const convert_to_buffer = (base64_file) => {
   return Buffer.from(base64_file.slice(base64_file.indexOf(",")), "base64");
 };
 
-const save_image = (base64_image, image_name) => {
+const save_image = (base64_image, image_name, ext) => {
   if (!base64_image || (base64_image && !base64_image.startsWith("data")))
     return base64_image;
 
+  ext = ext || "jpg";
   image_name = `${prefix}_${image_name || Date.now()}${
     image_name ? "" : generate_random_string(6, "alpha")
-  }.jpg`;
+  }.${ext}`;
+
   let image_path = __dirname + `/files/images/${image_name}`;
   fs.writeFileSync(
     image_path,

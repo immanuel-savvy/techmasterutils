@@ -1,5 +1,6 @@
 import React from "react";
 import Body_text from "../components/body_text";
+import Preview_image from "../components/preview_image";
 import Tools from "../contexts";
 import { client_domain, domain } from "../libs/services";
 
@@ -34,7 +35,8 @@ class Mac_address extends React.Component {
     return (
       <Tools.Consumer>
         {({ data, active_tab }) => {
-          let { sub_text, title, body_text } = data[active_tab];
+          let { sub_text, title, image, image_hash, body_text } =
+            data[active_tab];
 
           return (
             <section class="section">
@@ -44,10 +46,11 @@ class Mac_address extends React.Component {
                   <p>{sub_text}</p>
                 </div>
                 <div>
-                  <img
-                    src={`${domain}/images/${active_tab}.png`}
+                  <Preview_image
+                    image={image || `${active_tab}.png`}
+                    image_hash={image_hash}
+                    class_name="img"
                     style={{ width: "100%" }}
-                    className="img"
                   />
                 </div>
               </div>

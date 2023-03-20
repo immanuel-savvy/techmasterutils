@@ -8,7 +8,7 @@ var _conn = require("./news/conn");
 var _utils = require("./utils");
 var update_tool_data = function update_tool_data(req, res) {
   var data = req.body;
-  data.image = (0, _utils.save_image)(data.image);
+  data.image = (0, _utils.save_image)(data.image, data.tool, "png");
   _conn.TOOLS.update({
     tool: data.tool
   }, data);
