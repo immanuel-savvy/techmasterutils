@@ -526,8 +526,6 @@ main section .content .text .sub_txt {
   font-size: 16px;
   text-align: justify;
   color: #1f1f1f;
-  /* height: 150px; */
-  display: -webkit-box;
   overflow: auto;
   -webkit-line-clamp: 13;
   -webkit-box-orient: vertical;

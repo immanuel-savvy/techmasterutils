@@ -331,8 +331,17 @@ class Student_loan_calculator extends React.Component {
                 </form>
                 <div className="text sm_screen">
                   <p className="title">About {title}</p>
-                  <p className="sub_txt" id="exp_txt">
-                    {body_text}
+                  <p className="sub_txt">
+                    {body_text.slice(0, this.state.expanded ? -1 : 500)}
+                  </p>
+                  <p
+                    style={{ cursor: "pointer" }}
+                    class="exp"
+                    onClick={() =>
+                      this.setState({ expanded: !this.state.expanded })
+                    }
+                  >
+                    Expand <i class="material-icons-outlined">expand_more</i>
                   </p>
                 </div>
               </div>

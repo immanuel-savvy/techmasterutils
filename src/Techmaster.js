@@ -31,12 +31,13 @@ class Calculators extends React.Component {
     let href = window.location.href.toLowerCase().split("/");
     if (sections_name.includes(href.slice(-1)[0])) {
       href = href.slice(-1)[0];
+      window.history.pushState(null, null, href);
       this.setState({ active_section: href }, () =>
         window.sessionStorage.setItem("active_section", href)
       );
     } else {
       let active_section = window.sessionStorage.getItem("active_section");
-      if (active_section) window.location.href = active_section;
+      window.history.pushState(null, null, active_section || sections_name[0]);
     }
 
     let tools_data = await get_request("tools_data");

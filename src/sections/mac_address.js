@@ -28,7 +28,7 @@ class Mac_address extends React.Component {
   clear = () => this.setState({ result: "" });
 
   render() {
-    let { mac, result, searching } = this.state;
+    let { mac, result, searching, expanded } = this.state;
 
     return (
       <Tools.Consumer>
@@ -103,12 +103,18 @@ class Mac_address extends React.Component {
                 </form>
                 <div class="text">
                   <p class="title">About {title}</p>
-                  <p class="sub_txt" id="exp_txt">
-                    {body_text}
+                  <p className="sub_txt">
+                    {body_text.slice(0, this.state.expanded ? -1 : 500)}
                   </p>
-                  {/* <p class="exp" onclick="exp()">
-          Expand <i class="material-icons-outlined">expand_more</i>
-        </p> */}
+                  <p
+                    style={{ cursor: "pointer" }}
+                    class="exp"
+                    onClick={() =>
+                      this.setState({ expanded: !this.state.expanded })
+                    }
+                  >
+                    Expand <i class="material-icons-outlined">expand_more</i>
+                  </p>
                 </div>
               </div>
             </section>
