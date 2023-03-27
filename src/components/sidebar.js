@@ -1,4 +1,5 @@
 import React from "react";
+import Contact from "../sections/contact";
 import IP from "../sections/ip";
 import Mac_address from "../sections/mac_address";
 // import News from "../sections/news";
@@ -21,6 +22,7 @@ const sections = new Object({
   ip: { component: <IP />, title: "IPV4 / IPV6 Subnet Calculator" },
   mac_address: { component: <Mac_address />, title: "MAC Address Finder" },
   port_finder: { component: <Port_finder />, title: "TCP / UDP Port Finder" },
+  contact: { component: <Contact />, title: "Contact" },
 });
 
 const sections_name = Object.keys(sections);

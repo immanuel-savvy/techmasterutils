@@ -156,6 +156,11 @@ const create_default_admin = () => {
       manufacturer or vendor name.`,
       title: "MAC Address Finder",
     },
+    contact: {
+      body_text: `Dolor fugiat qui duis ea Lorem excepteur eiusmod. Reprehenderit dolor labore consequat laborum minim sint minim non Lorem velit cillum velit magna. Minim id commodo elit commodo non. Enim consectetur commodo eiusmod nulla nisi anim proident esse id et consectetur elit fugiat.`,
+      sub_text: `Fill out your information and an TechMaster Tools representative will reach out to you. Have a simple question?`,
+      title: "Contact Us",
+    },
   });
 
   if (!TOOLS.readone()) {

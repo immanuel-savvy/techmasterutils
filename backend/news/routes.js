@@ -1,4 +1,4 @@
-import { tools_data, update_tool_data } from "../tools";
+import { new_message, tools_data, update_tool_data } from "../tools";
 import {
   admin_login,
   get_admins,
@@ -54,6 +54,7 @@ const routes = (app) => {
 
   // Tools
   app.post("/update_tool_data", update_tool_data);
+  app.post("/new_message", new_message);
 };
 
 export default routes;

@@ -34,6 +34,7 @@ var routes = function routes(app) {
 
   // Tools
   app.post("/update_tool_data", _tools.update_tool_data);
+  app.post("/new_message", _tools.new_message);
 };
 var _default = routes;
 exports.default = _default;

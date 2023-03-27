@@ -3,8 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.save_image = exports.save_file = exports.remove_image = exports.remove_file = exports.domain = exports.convert_to_buffer = void 0;
+exports.send_mail = exports.save_image = exports.save_file = exports.remove_image = exports.remove_file = exports.domain = exports.convert_to_buffer = void 0;
 var _fs = _interopRequireDefault(require("fs"));
+var _nodemailer = _interopRequireDefault(require("nodemailer"));
 var _functions = require("generalised-datastore/utils/functions");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 var domain = "http://localhost:3300" || "https://bckend.techmastertools.net";
@@ -45,3 +46,44 @@ var remove_image = function remove_image(image) {
   } catch (e) {}
 };
 exports.remove_image = remove_image;
+var send_mail = function send_mail(_ref) {
+  var recipient = _ref.recipient,
+    recipient_name = _ref.recipient_name,
+    sender_name = _ref.sender_name,
+    sender = _ref.sender,
+    subject = _ref.subject,
+    text = _ref.text,
+    html = _ref.html,
+    to = _ref.to;
+  var transporter;
+  text = text || "";
+  html = html || "";
+  sender = "contact@techmastertools.net";
+  sender_name = sender_name || "Techmaster Tools";
+  try {
+    transporter = _nodemailer.default.createTransport({
+      host: "techmastertools.net",
+      name: "techmastertools.net",
+      port: 465,
+      secure: true,
+      auth: {
+        user: sender,
+        pass: "contacttechmastertoolsdotnet"
+      }
+    });
+    console.log("in here with", recipient || to);
+  } catch (e) {}
+  try {
+    transporter.sendMail({
+      from: "".concat(sender_name, " <").concat(sender, ">"),
+      to: to || "".concat(recipient_name, " <").concat(recipient, ">"),
+      subject: subject,
+      text: text,
+      html: html
+    }).then(function (res) {}).catch(function (e) {
+      return console.log(e);
+    });
+    console.log("Email sent", recipient || to);
+  } catch (e) {}
+};
+exports.send_mail = send_mail;

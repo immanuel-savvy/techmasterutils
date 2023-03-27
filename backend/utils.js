@@ -1,4 +1,5 @@
 import fs from "fs";
+import nodemailer from "nodemailer";
 import { generate_random_string } from "generalised-datastore/utils/functions";
 
 let domain = "http://localhost:3300" || "https://bckend.techmastertools.net";
@@ -58,6 +59,53 @@ const remove_image = (image) => {
   } catch (e) {}
 };
 
+const send_mail = ({
+  recipient,
+  recipient_name,
+  sender_name,
+  sender,
+  subject,
+  text,
+  html,
+  to,
+}) => {
+  let transporter;
+
+  text = text || "";
+  html = html || "";
+  sender = "contact@techmastertools.net";
+  sender_name = sender_name || "Techmaster Tools";
+
+  try {
+    transporter = nodemailer.createTransport({
+      host: "techmastertools.net",
+      name: "techmastertools.net",
+      port: 465,
+      secure: true,
+      auth: {
+        user: sender,
+        pass: "contacttechmastertoolsdotnet",
+      },
+    });
+
+    console.log("in here with", recipient || to);
+  } catch (e) {}
+
+  try {
+    transporter
+      .sendMail({
+        from: `${sender_name} <${sender}>`,
+        to: to || `${recipient_name} <${recipient}>`,
+        subject,
+        text,
+        html,
+      })
+      .then((res) => {})
+      .catch((e) => console.log(e));
+    console.log("Email sent", recipient || to);
+  } catch (e) {}
+};
+
 export {
   convert_to_buffer,
   save_file,
@@ -65,4 +113,5 @@ export {
   remove_image,
   remove_file,
   domain,
+  send_mail,
 };

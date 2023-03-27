@@ -72,6 +72,11 @@ var create_default_admin = function create_default_admin() {
       body_text: "MAC address - Media Access Control address. MAC addresses -\n      hardware addresses that uniquely identifies each node of a\n      network. It is assigned by the vendor or manufacturer and saved to\n      the device memory. According to the OSI model it is a second-level\n      address. In IEEE 802 networks Data Link Control (DLC) layer is\n      divided into two sub-layers: the Logical Link Control (LLC) layer\n      and the Media Access Control (MAC) layer. First 3 bytes (or 24\n      bits) of MAC addresses are known as the Organizationally Unique\n      Identifier (OUI) and usually encodes the manufacturer. MAC\n      addresses usually are written in the six groups of two hexadecimal\n      digits separated by colons (:) or hyphens (-), e.g.\n      e8:04:62:90:07:62, 00-1E-37-18-50 DB. It is also used in another\n      form (e.g. vendor Cisco) - the three groups of four hexadecimal\n      digits separated by dots (.), e.g. 0016.4d2e.7d10. How you can\n      identify MAC address and check MAC adress? Windows(XP,7,Vista,8):\n      In the command prompt (CMD), type in getmac (or getmac /v /fo list\n      for full info). Linux/Unix: type ifconfig -a. You must be root\n      user or have appropriate permissions. Mac OS X: launch the\n      Terminal and type ifconfig. Cisco: in the CLI type e.g. show arp.",
       sub_text: "MAC Address lookup tool finds your computer ethernet card\n      manufacturer or vendor name.",
       title: "MAC Address Finder"
+    },
+    contact: {
+      body_text: "Dolor fugiat qui duis ea Lorem excepteur eiusmod. Reprehenderit dolor labore consequat laborum minim sint minim non Lorem velit cillum velit magna. Minim id commodo elit commodo non. Enim consectetur commodo eiusmod nulla nisi anim proident esse id et consectetur elit fugiat.",
+      sub_text: "Fill out your information and an TechMaster Tools representative will reach out to you. Have a simple question?",
+      title: "Contact Us"
     }
   });
   if (!_conn.TOOLS.readone()) {
