@@ -1,10 +1,12 @@
 import React from "react";
 import { Table } from "react-bootstrap";
+import ReactMarkdown from "react-markdown";
 import Body_text from "../components/body_text";
 import Loadindicator from "../components/loadindicator";
 import Preview_image from "../components/preview_image";
 import Tools from "../contexts";
 import { client_domain, domain, get_request } from "../libs/services";
+import { Atag, Ptag } from "./student_loan_calculator";
 
 const commalise_figures = (figure) => {
   if (typeof figure !== "number") return figure;
@@ -265,7 +267,10 @@ class IP extends React.Component {
               <div className="top">
                 <div className="text">
                   <h1>{title}</h1>
-                  <p>{sub_text}</p>
+
+                  <ReactMarkdown components={{ p: Ptag, a: Atag }}>
+                    {sub_text}
+                  </ReactMarkdown>
                 </div>
                 <div>
                   <Preview_image

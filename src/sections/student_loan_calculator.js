@@ -8,8 +8,26 @@ import Line_chart from "../components/line_chart";
 import Pie_chart from "../components/pie_chart";
 import Preview_image from "../components/preview_image";
 import Tools from "../contexts";
-import { domain } from "../libs/services";
 import { commalise_figures } from "./ip";
+
+const Ptag = ({ children }) => {
+  return <p>{children}</p>;
+};
+
+const Atag = ({ children, href }) => {
+  return (
+    <a
+      target="_blank"
+      href={href}
+      style={{
+        color: "#111",
+        textDecoration: "underline",
+      }}
+    >
+      {children}
+    </a>
+  );
+};
 
 class Student_loan_calculator extends React.Component {
   constructor(props) {
@@ -198,7 +216,10 @@ class Student_loan_calculator extends React.Component {
               <div className="top">
                 <div className="text">
                   <h1>{title}</h1>
-                  <p>{sub_text}</p>
+
+                  <ReactMarkdown components={{ p: Ptag, a: Atag }}>
+                    {sub_text}
+                  </ReactMarkdown>
                 </div>
                 <div>
                   <Preview_image
@@ -542,3 +563,4 @@ class Student_loan_calculator extends React.Component {
 }
 
 export default Student_loan_calculator;
+export { Ptag, Atag };

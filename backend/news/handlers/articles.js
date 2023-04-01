@@ -70,6 +70,14 @@ const new_article = (req, res) => {
 
   article.image = save_image(article.image);
   article.views = 0;
+
+  article.sections = article.sections.map((sec) => {
+    if (sec.type === "image" && sec.image && sec.image.startsWith("data"))
+      sec.image = save_image(sec.image);
+
+    return sec;
+  });
+
   let result = ARTICLES.write(article);
   article._id = result._id;
   article.created = result.created;
@@ -114,12 +122,24 @@ const trending_articles = (req, res) => {
 const update_article = (req, res) => {
   let article = req.body;
 
-  let { image, title, sections, categories, _id } = article;
+  let { image, title, categories, _id } = article;
 
   image = save_image(image);
   categories = categories && categories.map((cat) => cat._id);
 
-  ARTICLES.update(_id, { image, title, sections, categories });
+  article.sections = article.sections.map((sec) => {
+    if (sec.type === "image" && sec.image && sec.image.startsWith("data"))
+      sec.image = save_image(sec.image);
+
+    return sec;
+  });
+
+  ARTICLES.update(_id, {
+    image,
+    title,
+    sections: article.sections,
+    categories,
+  });
 
   res.json({ ok: true, message: "article updated", data: article });
 };
@@ -129,6 +149,8 @@ const remove_article = (req, res) => {
 
   let result = ARTICLES.remove(article);
   remove_image(result.image);
+
+  result.sections.map((sec) => sec.image && remove_image(sec.image));
 
   ARTICLE_CATEGORIES.update_several(result.categories, {
     articles: { $splice: article },

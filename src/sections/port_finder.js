@@ -1,9 +1,11 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
+import ReactMarkdown from "react-markdown";
 import Body_text from "../components/body_text";
 import Preview_image from "../components/preview_image";
 import Tools from "../contexts";
 import { domain } from "../libs/services";
+import { Atag, Ptag } from "./student_loan_calculator";
 
 class Port_finder extends React.Component {
   constructor(props) {
@@ -67,7 +69,10 @@ class Port_finder extends React.Component {
               <div className="top">
                 <div className="text">
                   <h1>{title}</h1>
-                  <p>{sub_text}</p>
+
+                  <ReactMarkdown components={{ p: Ptag, a: Atag }}>
+                    {sub_text}
+                  </ReactMarkdown>
                 </div>
                 <div>
                   <Preview_image

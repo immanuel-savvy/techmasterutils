@@ -40,10 +40,8 @@ app.get("/google_rss_feed", (req, res) => {
   query = query.query;
 
   let g_rss = GLOBALS.readone({ global: "rss_query" });
-  console.log(g_rss);
   query = (query && query.replace(/,/g, " ").trim()) || (g_rss && g_rss.query);
 
-  console.log(query);
   google_news
     .search(query || "Technology", 5)
     .then((feed) => {
