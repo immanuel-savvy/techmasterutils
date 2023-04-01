@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Container, Row, Table } from "react-bootstrap";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
+import ReactMarkdown from "react-markdown";
 import Bar_chart from "../components/bar_chart";
 import Body_text from "../components/body_text";
 import Line_chart from "../components/line_chart";
@@ -260,54 +261,57 @@ class Student_loan_calculator extends React.Component {
                       })
                     }
                   />
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <span style={{ marginRight: 5, width: "100%" }}>
-                      <label for="port number">Annual pay rise:</label>
-                      <input
-                        type="number"
-                        name=""
-                        value={annual_increment}
-                        placeholder=""
-                        onChange={({ target }) =>
-                          this.setState({ annual_increment: target.value })
-                        }
-                      />
-                    </span>
-                    <span style={{ marginLeft: 5, width: "100%" }}>
-                      <label
-                        for="port number"
-                        id="student_loan_interest_rate_label"
-                      >
-                        Loan Interest Rate (%):{" "}
-                        <OverlayTrigger
-                          placement="right"
-                          overlay={this.popover}
+                  <div style={{ width: "100%" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        width: "100%",
+                      }}
+                    >
+                      <span style={{ marginRight: 5, width: "100%" }}>
+                        <label for="port number">Annual pay rise:</label>
+                        <input
+                          type="number"
+                          name=""
+                          value={annual_increment}
+                          placeholder=""
+                          onChange={({ target }) =>
+                            this.setState({ annual_increment: target.value })
+                          }
+                        />
+                      </span>
+                      <span style={{ marginLeft: 5, width: "100%" }}>
+                        <label
+                          for="port number"
+                          id="student_loan_interest_rate_label"
                         >
-                          <i
-                            onMouseOver={() => {}}
-                            className="material-icons-outlined"
+                          Loan Interest Rate (%):{" "}
+                          <OverlayTrigger
+                            placement="right"
+                            overlay={this.popover}
                           >
-                            info
-                          </i>
-                        </OverlayTrigger>
-                      </label>
-                      <input
-                        type="number"
-                        name=""
-                        value={loan_interest}
-                        placeholder=""
-                        onChange={({ target }) =>
-                          this.setState({ loan_interest: target.value })
-                        }
-                      />
-                    </span>
+                            <i
+                              onMouseOver={() => {}}
+                              className="material-icons-outlined"
+                            >
+                              info
+                            </i>
+                          </OverlayTrigger>
+                        </label>
+                        <input
+                          type="number"
+                          name=""
+                          value={loan_interest}
+                          placeholder=""
+                          onChange={({ target }) =>
+                            this.setState({ loan_interest: target.value })
+                          }
+                        />
+                      </span>
+                    </div>
                   </div>
 
                   <div

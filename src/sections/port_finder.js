@@ -104,7 +104,7 @@ class Port_finder extends React.Component {
                   </label>
                   <br />
                   <label for="">
-                    <span>Database updated - March 30, 2016</span>
+                    <span>Database updated - March 30, 2023</span>
                   </label>
                   <span className="fl">
                     <button onClick={this.search}>Search</button>
