@@ -37,8 +37,15 @@ class Mac_address extends React.Component {
     return (
       <Tools.Consumer>
         {({ data, active_tab }) => {
-          let { sub_text, title, image, image_hash, body_text } =
-            data[active_tab];
+          let {
+            sub_text,
+            title,
+            image,
+            body_image,
+            body_image_hash,
+            image_hash,
+            body_text,
+          } = data[active_tab];
 
           return (
             <section class="section">
@@ -110,7 +117,12 @@ class Mac_address extends React.Component {
                   </span>
                 </form>
 
-                <Body_text title={title} body_text={body_text} />
+                <Body_text
+                  title={title}
+                  image={body_image}
+                  image_hash={body_image_hash}
+                  body_text={body_text}
+                />
               </div>
             </section>
           );

@@ -61,8 +61,15 @@ class Port_finder extends React.Component {
     return (
       <Tools.Consumer>
         {({ data, active_tab }) => {
-          let { title, sub_text, body_text, image, image_hash } =
-            data[active_tab];
+          let {
+            title,
+            sub_text,
+            body_image,
+            body_image_hash,
+            body_text,
+            image,
+            image_hash,
+          } = data[active_tab];
 
           return (
             <section className="section">
@@ -113,7 +120,12 @@ class Port_finder extends React.Component {
                     </a>
                   </span>
                 </form>
-                <Body_text title={title} body_text={body_text} />
+                <Body_text
+                  title={title}
+                  image={body_image}
+                  image_hash={body_image_hash}
+                  body_text={body_text}
+                />
               </div>
 
               <div

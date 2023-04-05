@@ -43,8 +43,15 @@ class Contact extends React.Component {
     return (
       <Tools.Consumer>
         {({ data, active_tab }) => {
-          let { title, sub_text, body_text, image, image_hash } =
-            data[active_tab];
+          let {
+            title,
+            sub_text,
+            body_image,
+            body_image_hash,
+            body_text,
+            image,
+            image_hash,
+          } = data[active_tab];
 
           return (
             <section className="section">
@@ -139,6 +146,8 @@ class Contact extends React.Component {
                   title={title}
                   tool={active_tab}
                   body_text={body_text}
+                  image={body_image}
+                  image_hash={body_image_hash}
                 />
               </div>
             </section>

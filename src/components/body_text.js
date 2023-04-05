@@ -1,5 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import Preview_image from "./preview_image";
 
 const Ptag = ({ children }) => {
   return <p className="sub_txt">{children}</p>;
@@ -29,11 +30,20 @@ class Body_text extends React.Component {
 
   render() {
     let { expanded } = this.state;
-    let { title, body_text, tool } = this.props;
+    let { title, body_text, tool, image, image_hash } = this.props;
 
     return (
       <div className="text sm_screen">
         <p className="title">About {tool === "contact" ? "" : title}</p>
+        <div style={{ width: "100%", marginBottom: 20 }}>
+          <Preview_image
+            image={image || `techmasternews_1678576327445uwwqcq.jpg`}
+            image_hash={image_hash}
+            class_name="img rounded"
+            style={{ width: "100%" }}
+          />
+        </div>
+
         <ReactMarkdown components={{ p: Ptag, a: Atag }}>
           {body_text.slice(0, this.state.expanded ? -1 : 500) +
             (expanded ? "" : "...")}
