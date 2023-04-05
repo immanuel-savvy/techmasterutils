@@ -8,7 +8,7 @@ const update_tool_data = (req, res) => {
   data.image = save_image(data.image, data.tool, "png");
   data.body_image = save_image(
     data.body_image,
-    `${data.tool}-${data.title.replace(/ /g, "_")}`,
+    `${data.tool}-${data.title.replace(/[ \/]/g, "_")}`,
     "png"
   );
 

@@ -46,17 +46,19 @@ class Body_text extends React.Component {
 
         <ReactMarkdown components={{ p: Ptag, a: Atag }}>
           {body_text.slice(0, this.state.expanded ? -1 : 500) +
-            (expanded ? "" : "...")}
+            (expanded ? "" : body_text.length <= 500 ? "" : "...")}
         </ReactMarkdown>
         <p className="sub_txt"></p>
-        <p
-          style={{ cursor: "pointer" }}
-          class="exp"
-          onClick={() => this.setState({ expanded: !expanded })}
-        >
-          {expanded ? "Show less" : "Expand"}{" "}
-          <i class="material-icons-outlined">expand_more</i>
-        </p>
+        {body_text.length <= 500 ? null : (
+          <p
+            style={{ cursor: "pointer" }}
+            class="exp"
+            onClick={() => this.setState({ expanded: !expanded })}
+          >
+            {expanded ? "Show less" : "Expand"}{" "}
+            <i class="material-icons-outlined">expand_more</i>
+          </p>
+        )}
       </div>
     );
   }
