@@ -5,7 +5,7 @@ import Techmaster from "./Techmaster";
 import reportWebVitals from "./reportWebVitals";
 import ReactGA from "react-ga";
 
-const measurement_id = "G-XKSGORRQYL";
+const measurement_id = "UA-263349157-1";
 ReactGA.initialize(measurement_id);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
