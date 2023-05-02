@@ -51,7 +51,8 @@ class Mac_address extends React.Component {
             <section class="section">
               <div class="top">
                 <div class="text">
-                  <h1>{title}</h1>
+                  <h3>{title}</h3>
+
                   <ReactMarkdown components={{ p: Ptag, a: Atag }}>
                     {sub_text}
                   </ReactMarkdown>

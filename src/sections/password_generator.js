@@ -82,7 +82,7 @@ class Password_generator extends React.Component {
             <section className="section">
               <div className="top">
                 <div className="text">
-                  <h1>{title}</h1>
+                  <h3>{title}</h3>
 
                   <ReactMarkdown components={{ p: Ptag, a: Atag }}>
                     {sub_text}
