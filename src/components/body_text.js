@@ -56,7 +56,9 @@ class Body_text extends React.Component {
             onClick={() => this.setState({ expanded: !expanded })}
           >
             {expanded ? "Show less" : "Expand"}{" "}
-            <i class="material-icons-outlined">expand_more</i>
+            <i class="material-icons-outlined">
+              {expanded ? "expand_less" : "expand_more"}
+            </i>
           </p>
         )}
       </div>

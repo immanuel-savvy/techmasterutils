@@ -37,7 +37,7 @@ class Calculators extends React.Component {
       );
     } else {
       let active_section = window.sessionStorage.getItem("active_section");
-      window.history.pushState(null, null, active_section || sections_name[0]);
+      // window.history.pushState(null, null, active_section || sections_name[0]);
     }
 
     let tools_data = await get_request("tools_data");
