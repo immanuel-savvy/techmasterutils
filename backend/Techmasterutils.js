@@ -119,6 +119,27 @@ app.post("/pdf_to_word", async (req, res) => {
   }, 60 * 60 * 1000);
 });
 
+let service_ports = require("./service_port.json");
+
+app.get("/port_details/:value", (req, res) => {
+  let { value } = req.params,
+    is_number;
+
+  if ("0123456789".includes(value[0])) is_number = true;
+
+  let result = new Array();
+  for (let s = 0; s < service_ports.length; s++) {
+    let serice_port = service_ports[s];
+
+    if (
+      String(serice_port[is_number ? "Port Number" : "Service Name"]) === value
+    )
+      result.push(serice_port);
+  }
+
+  res.json(result);
+});
+
 app.listen(3300, () => {
   ds_conn();
   create_default_admin();

@@ -162,7 +162,7 @@ class Password_generator extends React.Component {
                   <div className="flex">
                     <label for="digits">
                       <input type="checkbox" name="" id="digits" />
-                      <p style={{ marginTop: 18 }}>Digits [23456789]</p>
+                      <p style={{ marginTop: 18 }}>Digits [0123456789]</p>
                     </label>
                   </div>
                   <div className="flex">

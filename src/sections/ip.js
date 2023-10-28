@@ -5,7 +5,7 @@ import Body_text from "../components/body_text";
 import Loadindicator from "../components/loadindicator";
 import Preview_image from "../components/preview_image";
 import Tools from "../contexts";
-import { client_domain, domain, get_request } from "../libs/services";
+import { get_request } from "../libs/services";
 import { Atag, Ptag } from "./student_loan_calculator";
 
 const commalise_figures = (figure) => {

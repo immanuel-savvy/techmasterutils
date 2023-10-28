@@ -29,6 +29,11 @@ const tools_data = (req, res) => {
   res.json({ ok: true, message: "tools data", data: data_obj });
 };
 
+const tool_data = (req, res) => {
+  let { tool } = req.params;
+  res.json({ ok: true, data: TOOLS.readone({ tool }) });
+};
+
 const new_message = (req, res) => {
   let { email, fullname, message } = req.body;
 
@@ -45,4 +50,4 @@ const new_message = (req, res) => {
   });
 };
 
-export { update_tool_data, tools_data, new_message };
+export { update_tool_data, tools_data, tool_data, new_message };

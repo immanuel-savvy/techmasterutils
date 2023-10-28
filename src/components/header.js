@@ -32,7 +32,7 @@ class Header extends React.Component {
               );
             })}
             <a
-              href="https://news.techmastertools.net"
+              href="https://blog.techmastertools.net/blogs"
               target="_blank"
               id="sc_1"
             >
