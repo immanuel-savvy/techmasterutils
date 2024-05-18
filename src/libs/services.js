@@ -1,7 +1,5 @@
 let DEV = true;
-let domain = DEV
-  ? `http://localhost:3300`
-  : "https://bckend.techmastertools.net";
+let domain = DEV ? `http://localhost:3300` : "https://api.techmastertools.net";
 let client_domain = DEV
   ? "http://localhost:3000"
   : "https://techmastertools.net";
